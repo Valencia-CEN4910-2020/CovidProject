@@ -24,13 +24,22 @@ import { CustomTooltips } from '@coreui/coreui-plugin-chartjs-custom-tooltips';
 import { getStyle, hexToRgba } from '@coreui/coreui/dist/js/coreui-utilities'
 import ReactTooltip from "react-tooltip";
 import Florida from "../../florida";
+import Counties from "../../counties";
+import Daily from "../../daily";
 
 
 const Widget03 = lazy(() => import('../../views/Widgets/Widget03'));
 const curday =(day)=> {
+const dash = "-"
 let date = new Date();
 date.setDate(date.getDate() - day);
-return date;
+var dd = date.getDate();
+var mm = date.getMonth()+1; //As January is 0.
+var yyyy = date.getFullYear();
+
+if(dd<10) dd='0'+dd;
+if(mm<10) mm='0'+mm;
+return (mm+dash+dd+dash+yyyy);
 };
 
 const brandPrimary = getStyle('--primary')
@@ -38,20 +47,25 @@ const brandSuccess = getStyle('--success')
 const brandInfo = getStyle('--info')
 const brandWarning = getStyle('--warning')
 const brandDanger = getStyle('--danger')
+const daily_url ="https://covid19.mathdro.id/api/daily/";
 
 
 // Card Chart 1
 const cardChartData1 = {
-    labels: [curday(6), curday(5), curday(4), curday(3), curday(2), curday(1), curday(0)],
+    labels: [curday(7), curday(6), curday(5), curday(4), curday(3), curday(2), curday(1)],
   datasets: [
     {
       label: 'My First dataset',
       backgroundColor: brandPrimary,
       borderColor: 'rgba(255,255,255,.55)',
-      data: [65, 59, 84, 84, 51, 55, 40],
+      data: [78, 81, 80, 45, 34, 12, 40],
     },
   ],
 };
+
+
+
+
 
 const cardChartOpts1 = {
   tooltips: {
@@ -100,7 +114,7 @@ const cardChartOpts1 = {
 
 // Card Chart 2
 const cardChartData2 = {
-  labels:[curday(6), curday(5), curday(4), curday(3), curday(2), curday(1), curday(0)],
+  labels:[curday(7), curday(6), curday(5), curday(4), curday(3), curday(2), curday(1)],
   datasets: [
     {
       label: 'My First dataset',
@@ -473,11 +487,38 @@ let val = await country.confirmed.value;
 return val;
 }
 
-const orange = async () => {
+/* const counties = async () => {
+let fcounties =[];
 const response = await fetch(confirmed_url);
 const data = await response.json();
-let val = await data[89].confirmed;
-return val;
+for (let i = 0; i < data.length; i++) {
+  if(data[i].provinceState=="Florida")
+  {
+    fcounties.push(data[i]);
+  }
+}
+
+return fcounties;
+} */
+
+const orange = async ()=>{
+  let val;
+  let data = await Counties();
+  for(let i = 0; i<data.length;i++){
+    if(data[i].admin2=="Orange"){
+      val=data[i].confirmed;
+    }
+  }
+  return val;
+}
+
+const florida_total = async ()=>{
+  let val=0;
+  let data = await Counties();
+  for(let i = 0; i<data.length;i++){
+    val+=data[i].confirmed;
+  }
+  return val;
 }
 
 
@@ -486,6 +527,8 @@ class Dashboard extends Component {;
     country: {},
     orange: {},
     osceola: {},
+    total: {},
+    fl_daily: {},
   }
   constructor(props) {
     super(props);
@@ -504,9 +547,35 @@ class Dashboard extends Component {;
   async componentDidMount(){
     const country_confirmed = await get_country();
     const orange_confirmed = await orange();
+    const total_confirmed = await florida_total();
 
     this.setState({country: country_confirmed});
     this.setState({orange: orange_confirmed});
+    this.setState({total: total_confirmed});
+
+      /*const val1 = await Daily(daily_url+curday(1));
+      this.setState({fl_daily: val1});
+      cardChartData1.datasets[0].data.push(this.state.fl_daily);
+      const val2 = await Daily(daily_url+curday(2));
+      this.setState({fl_daily: val2});
+      cardChartData1.datasets[0].data.push(this.state.fl_daily);
+      const val3 = await Daily(daily_url+curday(3));
+      this.setState({fl_daily: val3});
+      cardChartData1.datasets[0].data.push(this.state.fl_daily);
+      const val4 = await Daily(daily_url+curday(4));
+      this.setState({fl_daily: val4});
+      cardChartData1.datasets[0].data.push(this.state.fl_daily);
+      const val5 = await Daily(daily_url+curday(5));
+      this.setState({fl_daily: val5});
+      cardChartData1.datasets[0].data.push(this.state.fl_daily);
+      const val6 = await Daily(daily_url+curday(6));
+      this.setState({fl_daily: val6});
+      cardChartData1.datasets[0].data.push(this.state.fl_daily);
+      const val7 = await Daily(daily_url+curday(7));
+      this.setState({fl_daily: val7});
+      cardChartData1.datasets[0].data.push(this.state.fl_daily);
+      console.log(cardChartData1);*/
+
   }
 
 
@@ -570,7 +639,7 @@ class Dashboard extends Component {;
                     </DropdownMenu>
                   </Dropdown>
                 </ButtonGroup>
-                <div className="text-value">9.823</div>
+                <div className="text-value">{this.state.total}</div>
                 <div>Current Cases in your State</div>
               </CardBody>
               <div className="chart-wrapper mx-3" style={{ height: '70px' }}>

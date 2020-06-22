@@ -6,6 +6,8 @@ import {
   Geography
 } from "react-simple-maps";
 
+import Counties from "./counties";
+
 const geoUrl =
   "https://raw.githubusercontent.com/wrislin1/CovidProject/master/Prototype/florida2.json";
 
@@ -29,9 +31,18 @@ const MapChart = ({ setTooltipContent }) => {
                 <Geography
                   key={geo.rsmKey}
                   geography={geo}
-                  onMouseEnter={() => {
-                    const { NAME} = geo.properties;
-                    setTooltipContent(`${NAME}`);
+                  onMouseEnter={ async () => {
+                    let confirmed;
+                    let counties = await Counties();
+                    const name = geo.properties.NAME;
+                    for(let i=0;i<counties.length;i++)
+                    {
+                      if(name == counties[i].admin2)
+                      {
+                        confirmed = counties[i].confirmed;
+                      }
+                    }
+                    setTooltipContent(name + ": " + confirmed);
                   }}
                   onMouseLeave={() => {
                     setTooltipContent("");
