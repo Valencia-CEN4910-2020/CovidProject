@@ -394,19 +394,18 @@ function random(min, max) {
 var elements = 27;
 var data1 = [];
 var data2 = [];
-var data3 = [];
 
 for (var i = 0; i <= elements; i++) {
   data1.push(random(50, 200));
   data2.push(random(80, 100));
-  data3.push(65);
 }
 
 const mainChart = {
-  labels: ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'],
+  labels: [curday(28), curday(27), curday(26), curday(25), curday(24), curday(23), curday(22), curday(21), curday(20), curday(19), curday(18), curday(17), curday(16)
+  , curday(15), curday(14), curday(13), curday(12), curday(11), curday(10), curday(9), curday(8), curday(7), curday(6), curday(5), curday(4), curday(3), curday(2), curday(1)],
   datasets: [
     {
-      label: 'My First dataset',
+      label: 'Florida Confirmed Cases',
       backgroundColor: hexToRgba(brandInfo, 10),
       borderColor: brandInfo,
       pointHoverBackgroundColor: '#fff',
@@ -414,21 +413,12 @@ const mainChart = {
       data: data1,
     },
     {
-      label: 'My Second dataset',
+      label: 'Florida Estimates',
       backgroundColor: 'transparent',
       borderColor: brandSuccess,
       pointHoverBackgroundColor: '#fff',
       borderWidth: 2,
       data: data2,
-    },
-    {
-      label: 'My Third dataset',
-      backgroundColor: 'transparent',
-      borderColor: brandDanger,
-      pointHoverBackgroundColor: '#fff',
-      borderWidth: 1,
-      borderDash: [8, 5],
-      data: data3,
     },
   ],
 };
@@ -461,15 +451,15 @@ const mainChartOpts = {
       {
         ticks: {
           beginAtZero: true,
-          maxTicksLimit: 5,
-          stepSize: Math.ceil(250 / 5),
-          max: 250,
+          maxTicksLimit: 20000,
+          stepSize: 10000,
+          max: 150000,
         },
       }],
   },
   elements: {
     point: {
-      radius: 0,
+      radius: 1,
       hitRadius: 10,
       hoverRadius: 4,
       hoverBorderWidth: 3,
@@ -513,7 +503,7 @@ const orange = async ()=>{
   return val;
 }
 
-const orange_daily = async (data)=>{
+const counties_daily = async (data)=>{
   let val=[];
   for(let i = 0; i<data.length;i++){
     for(let k = 0; k<data[i].length;k++){
@@ -534,12 +524,18 @@ const florida_total = async ()=>{
   return val;
 }
 
-const daily_total = async (data)=>{
-  let val = 0;
-  for(let i = 0; i<data.length;i++){
-val=parseInt(val)+parseInt(data[i].confirmed);
+const state_daily = async (data,n)=>{
+  let val =[];
+  for(let j =0; j<n+1;j++)
+  {
+    val.push(0);
   }
-  return val;
+  for(let i = 0; i<data.length;i++){
+    for(let k=0;k<data[i].length;k++){
+val[n-i]=parseInt(val[n-i])+parseInt(data[i][k].confirmed);
+  }
+}
+return val;
 }
 
 
@@ -553,6 +549,7 @@ class Dashboard extends Component {
     total: {},
     counties_daily:[0,0,0,0,0,0,0] ,
     fl_daily: [0,0,0,0,0,0,0],
+    fl_daily_main: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
     us_daily: [0,0,0,0,0,0,0],
     fl_options: {},
   }
@@ -578,24 +575,23 @@ class Dashboard extends Component {
 
   async componentDidMount(){
 
-    console.log(this.state.fl_options);
+
     const country_confirmed = await get_country();
     const orange_confirmed = await orange();
-    const total_confirmed = await florida_total();
-    const us_daily = await Usa_daily();
-    console.log(us_daily);
+    const state_confirmed = await florida_total();
+    const us_daily_vals = await Usa_daily();
+    const daily_vals = await Daily(8);
+    const daily_vals_main = await Daily(29);
+    const oc_daily_vals = await counties_daily(daily_vals);
+    const state_daily_vals = await state_daily(daily_vals,6);
+    const state_daily_main = await state_daily(daily_vals_main,27);
 
-    this.setState({country: this.formatNumber(country_confirmed), orange: this.formatNumber(orange_confirmed), total: this.formatNumber(total_confirmed)});
-    const daily = await Daily();
-    const oc_vals = await orange_daily(daily);
-    let val0 = await daily_total(daily[6]);
-    let val1 = await daily_total(daily[5]);
-    let val2 = await daily_total(daily[4]);
-    let val3 = await daily_total(daily[3]);
-    let val4 = await daily_total(daily[2]);
-    let val5 = await daily_total(daily[1]);
-    let val6 = await daily_total(daily[0]);
-    this.setState({fl_daily: [val0,val1,val2,val3,val4,val5,val6], counties_daily: oc_vals, us_daily: us_daily} );
+
+
+
+    this.setState({country: this.formatNumber(country_confirmed), orange: this.formatNumber(orange_confirmed), total: this.formatNumber(state_confirmed)
+      ,fl_daily: state_daily_vals, counties_daily: oc_daily_vals, us_daily: us_daily_vals, fl_daily_main: state_daily_main});
+    mainChart.datasets[0].data = this.state.fl_daily_main;
     cardChartData1.datasets[0].data = this.state.fl_daily;
     cardChartData2.datasets[0].data = this.state.counties_daily;
     cardChartData4.datasets[0].data = this.state.us_daily;
@@ -711,16 +707,13 @@ class Dashboard extends Component {
               <CardBody>
                 <Row>
                   <Col sm="5">
-                    <CardTitle className="mb-0">Confirmed Covid Cases vs Estimates</CardTitle>
-                    <div className="small text-muted">March 2020</div>
+                    <CardTitle className="mb-0">Florida Confirmed Covid Cases vs Estimates</CardTitle>
                   </Col>
                   <Col sm="7" className="d-none d-sm-inline-block">
-                    <Button color="primary" className="float-right"><i className="icon-cloud-download"></i></Button>
                     <ButtonToolbar className="float-right" aria-label="Toolbar with button groups">
                       <ButtonGroup className="mr-3" aria-label="First group">
                         <Button color="outline-secondary" onClick={() => this.onRadioBtnClick(1)} active={this.state.radioSelected === 1}>Day</Button>
                         <Button color="outline-secondary" onClick={() => this.onRadioBtnClick(2)} active={this.state.radioSelected === 2}>Month</Button>
-                        <Button color="outline-secondary" onClick={() => this.onRadioBtnClick(3)} active={this.state.radioSelected === 3}>Year</Button>
                       </ButtonGroup>
                     </ButtonToolbar>
                   </Col>
