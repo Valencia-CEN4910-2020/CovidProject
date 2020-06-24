@@ -26,6 +26,7 @@ import ReactTooltip from "react-tooltip";
 import Florida from "../../florida";
 import Counties from "../../counties";
 import Daily from "../../daily";
+import Usa_daily from "../../usa_daily";
 
 
 const Widget03 = lazy(() => import('../../views/Widgets/Widget03'));
@@ -58,7 +59,7 @@ const cardChartData1 = {
       label: 'My First dataset',
       backgroundColor: brandPrimary,
       borderColor: 'rgba(255,255,255,.55)',
-      data: [78, 81, 80, 45, 34, 12, 40],
+      data: [55000,55000,55000,55000,55000,55000,55000],
     },
   ],
 };
@@ -94,8 +95,8 @@ const cardChartOpts1 = {
         display: false,
         ticks: {
           display: false,
-          min: Math.min.apply(Math, cardChartData1.datasets[0].data) - 5,
-          max: Math.max.apply(Math, cardChartData1.datasets[0].data) + 5,
+          min: 50000,
+          max: 101000,
         },
       }],
   },
@@ -120,7 +121,7 @@ const cardChartData2 = {
       label: 'My First dataset',
       backgroundColor: brandInfo,
       borderColor: 'rgba(255,255,255,.55)',
-      data: [1, 18, 9, 17, 34, 22, 11],
+      data: [3100, 3100, 3100, 3100, 3100, 3100, 3100],
     },
   ],
 };
@@ -152,8 +153,8 @@ const cardChartOpts2 = {
         display: false,
         ticks: {
           display: false,
-          min: Math.min.apply(Math, cardChartData2.datasets[0].data) - 5,
-          max: Math.max.apply(Math, cardChartData2.datasets[0].data) + 5,
+          min: 3000,
+          max: 6000,
         },
       }],
   },
@@ -178,7 +179,7 @@ const cardChartData3 = {
       label: 'My First dataset',
       backgroundColor: 'rgba(255,255,255,.2)',
       borderColor: 'rgba(255,255,255,.55)',
-      data: [78, 81, 80, 45, 34, 12, 40],
+      data: [150000, 150000, 150000, 150000, 150000, 150000, 150000],
     },
   ],
 };
@@ -222,7 +223,7 @@ const cardChartData4 = {
       label: 'My First dataset',
       backgroundColor: 'rgba(255,255,255,.2)',
       borderColor: 'rgba(255,255,255,.55)',
-      data: [78, 81, 80, 45, 34, 12, 40],
+      data: [150000, 150000, 150000, 150000, 150000, 150000, 150000],
     },
   ],
 };
@@ -512,6 +513,18 @@ const orange = async ()=>{
   return val;
 }
 
+const orange_daily = async (data)=>{
+  let val=[];
+  for(let i = 0; i<data.length;i++){
+    for(let k = 0; k<data[i].length;k++){
+    if(data[i][k].admin2=="Orange"){
+      val[6-i]=data[i][k].confirmed;
+    }
+  }
+  }
+  return val;
+}
+
 const florida_total = async ()=>{
   let val=0;
   let data = await Counties();
@@ -521,18 +534,33 @@ const florida_total = async ()=>{
   return val;
 }
 
+const daily_total = async (data)=>{
+  let val = 0;
+  for(let i = 0; i<data.length;i++){
+val=parseInt(val)+parseInt(data[i].confirmed);
+  }
+  return val;
+}
 
-class Dashboard extends Component {;
+
+
+
+class Dashboard extends Component {
   state = {
     country: {},
     orange: {},
     osceola: {},
     total: {},
-    fl_daily: {},
+    counties_daily:[0,0,0,0,0,0,0] ,
+    fl_daily: [0,0,0,0,0,0,0],
+    us_daily: [0,0,0,0,0,0,0],
+    fl_options: {},
   }
+
+
+
   constructor(props) {
     super(props);
-
     this.toggle = this.toggle.bind(this);
     this.onRadioBtnClick = this.onRadioBtnClick.bind(this);
 
@@ -540,44 +568,48 @@ class Dashboard extends Component {;
       dropdownOpen: false,
       radioSelected: 2,
     };
+
+
+    this.state.fl_options = cardChartOpts1;
+
   }
 
 
 
   async componentDidMount(){
+
+    console.log(this.state.fl_options);
     const country_confirmed = await get_country();
     const orange_confirmed = await orange();
     const total_confirmed = await florida_total();
+    const us_daily = await Usa_daily();
+    console.log(us_daily);
 
-    this.setState({country: country_confirmed});
-    this.setState({orange: orange_confirmed});
-    this.setState({total: total_confirmed});
+    this.setState({country: this.formatNumber(country_confirmed), orange: this.formatNumber(orange_confirmed), total: this.formatNumber(total_confirmed)});
+    const daily = await Daily();
+    const oc_vals = await orange_daily(daily);
+    let val0 = await daily_total(daily[6]);
+    let val1 = await daily_total(daily[5]);
+    let val2 = await daily_total(daily[4]);
+    let val3 = await daily_total(daily[3]);
+    let val4 = await daily_total(daily[2]);
+    let val5 = await daily_total(daily[1]);
+    let val6 = await daily_total(daily[0]);
+    this.setState({fl_daily: [val0,val1,val2,val3,val4,val5,val6], counties_daily: oc_vals, us_daily: us_daily} );
+    cardChartData1.datasets[0].data = this.state.fl_daily;
+    cardChartData2.datasets[0].data = this.state.counties_daily;
+    cardChartData4.datasets[0].data = this.state.us_daily;
+    cardChartOpts1.scales.yAxes[0].ticks.min =  Math.min.apply(Math, this.state.fl_daily) - 5000;
+    cardChartOpts1.scales.yAxes[0].ticks.max =  Math.max.apply(Math, this.state.fl_daily) + 5000;
+    this.setState({fl_options: cardChartOpts1});
 
-      /*const val1 = await Daily(daily_url+curday(1));
-      this.setState({fl_daily: val1});
-      cardChartData1.datasets[0].data.push(this.state.fl_daily);
-      const val2 = await Daily(daily_url+curday(2));
-      this.setState({fl_daily: val2});
-      cardChartData1.datasets[0].data.push(this.state.fl_daily);
-      const val3 = await Daily(daily_url+curday(3));
-      this.setState({fl_daily: val3});
-      cardChartData1.datasets[0].data.push(this.state.fl_daily);
-      const val4 = await Daily(daily_url+curday(4));
-      this.setState({fl_daily: val4});
-      cardChartData1.datasets[0].data.push(this.state.fl_daily);
-      const val5 = await Daily(daily_url+curday(5));
-      this.setState({fl_daily: val5});
-      cardChartData1.datasets[0].data.push(this.state.fl_daily);
-      const val6 = await Daily(daily_url+curday(6));
-      this.setState({fl_daily: val6});
-      cardChartData1.datasets[0].data.push(this.state.fl_daily);
-      const val7 = await Daily(daily_url+curday(7));
-      this.setState({fl_daily: val7});
-      cardChartData1.datasets[0].data.push(this.state.fl_daily);
-      console.log(cardChartData1);*/
 
   }
 
+
+  formatNumber(num){
+   return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
+ }
 
 
   toggle() {
@@ -643,7 +675,7 @@ class Dashboard extends Component {;
                 <div>Current Cases in your State</div>
               </CardBody>
               <div className="chart-wrapper mx-3" style={{ height: '70px' }}>
-                <Line data={cardChartData1} options={cardChartOpts1} height={70} />
+                <Line data={cardChartData1} options={this.state.fl_options} height={70} />
               </div>
             </Card>
           </Col>
