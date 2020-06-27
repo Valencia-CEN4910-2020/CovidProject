@@ -23,6 +23,7 @@ import {
 import { CustomTooltips } from '@coreui/coreui-plugin-chartjs-custom-tooltips';
 import { getStyle, hexToRgba } from '@coreui/coreui/dist/js/coreui-utilities'
 import ReactTooltip from "react-tooltip";
+import navigation from '../../_nav';
 import Florida from "../../florida";
 import Counties from "../../counties";
 import Daily from "../../daily";
@@ -43,12 +44,28 @@ if(mm<10) mm='0'+mm;
 return (mm+dash+dd+dash+yyyy);
 };
 
+const curdayr =(day)=> {
+const dash = "-"
+let date = new Date();
+date.setDate(date.getDate() - day);
+var dd = date.getDate();
+var mm = date.getMonth()+1; //As January is 0.
+var yyyy = date.getFullYear();
+
+if(dd<10) dd='0'+dd;
+if(mm<10) mm='0'+mm;
+return (yyyy+dash+mm+dash+dd);
+};
+
+
+
 const brandPrimary = getStyle('--primary')
 const brandSuccess = getStyle('--success')
 const brandInfo = getStyle('--info')
 const brandWarning = getStyle('--warning')
 const brandDanger = getStyle('--danger')
 const daily_url ="https://covid19.mathdro.id/api/daily/";
+let change = false;
 
 
 // Card Chart 1
@@ -59,7 +76,7 @@ const cardChartData1 = {
       label: 'My First dataset',
       backgroundColor: brandPrimary,
       borderColor: 'rgba(255,255,255,.55)',
-      data: [55000,55000,55000,55000,55000,55000,55000],
+      data: [0,0,0,0,0,0,0],
     },
   ],
 };
@@ -80,37 +97,14 @@ const cardChartOpts1 = {
   scales: {
     xAxes: [
       {
-        gridLines: {
-          color: 'transparent',
-          zeroLineColor: 'transparent',
-        },
-        ticks: {
-          fontSize: 2,
-          fontColor: 'transparent',
-        },
-
+        display: false,
       }],
     yAxes: [
       {
         display: false,
-        ticks: {
-          display: false,
-          min: 50000,
-          max: 101000,
-        },
       }],
   },
-  elements: {
-    line: {
-      borderWidth: 1,
-    },
-    point: {
-      radius: 4,
-      hitRadius: 10,
-      hoverRadius: 4,
-    },
-  }
-}
+};
 
 
 // Card Chart 2
@@ -121,7 +115,7 @@ const cardChartData2 = {
       label: 'My First dataset',
       backgroundColor: brandInfo,
       borderColor: 'rgba(255,255,255,.55)',
-      data: [3100, 3100, 3100, 3100, 3100, 3100, 3100],
+      data: [0, 0, 0, 0, 0, 0, 0],
     },
   ],
 };
@@ -138,36 +132,12 @@ const cardChartOpts2 = {
   scales: {
     xAxes: [
       {
-        gridLines: {
-          color: 'transparent',
-          zeroLineColor: 'transparent',
-        },
-        ticks: {
-          fontSize: 2,
-          fontColor: 'transparent',
-        },
-
+        display: false,
       }],
     yAxes: [
       {
         display: false,
-        ticks: {
-          display: false,
-          min: 3000,
-          max: 6000,
-        },
       }],
-  },
-  elements: {
-    line: {
-      tension: 0.00001,
-      borderWidth: 1,
-    },
-    point: {
-      radius: 4,
-      hitRadius: 10,
-      hoverRadius: 4,
-    },
   },
 };
 
@@ -203,16 +173,6 @@ const cardChartOpts3 = {
         display: false,
       }],
   },
-  elements: {
-    line: {
-      borderWidth: 2,
-    },
-    point: {
-      radius: 0,
-      hitRadius: 10,
-      hoverRadius: 4,
-    },
-  },
 };
 
 // Card Chart 4
@@ -223,7 +183,7 @@ const cardChartData4 = {
       label: 'My First dataset',
       backgroundColor: 'rgba(255,255,255,.2)',
       borderColor: 'rgba(255,255,255,.55)',
-      data: [150000, 150000, 150000, 150000, 150000, 150000, 150000],
+      data: [0, 0, 0, 0, 0, 0, 0],
     },
   ],
 };
@@ -492,22 +452,22 @@ for (let i = 0; i < data.length; i++) {
 return fcounties;
 } */
 
-const orange = async ()=>{
+const orange = async (county)=>{
   let val;
   let data = await Counties();
   for(let i = 0; i<data.length;i++){
-    if(data[i].admin2=="Orange"){
+    if(data[i].admin2==county){
       val=data[i].confirmed;
     }
   }
   return val;
 }
 
-const counties_daily = async (data)=>{
+const counties_daily = async (data,county)=>{
   let val=[];
   for(let i = 0; i<data.length;i++){
     for(let k = 0; k<data[i].length;k++){
-    if(data[i][k].admin2=="Orange"){
+    if(data[i][k].admin2==county){
       val[6-i]=data[i][k].confirmed;
     }
   }
@@ -524,6 +484,8 @@ const florida_total = async ()=>{
   return val;
 }
 
+
+
 const state_daily = async (data,n)=>{
   let val =[];
   for(let j =0; j<n+1;j++)
@@ -537,6 +499,18 @@ val[n-i]=parseInt(val[n-i])+parseInt(data[i][k].confirmed);
 }
 return val;
 }
+let est = {}
+const csv_data = (data)=>{
+  		est = data;
+}
+
+
+var us_csv = require('../../US.csv');
+var fl_csv = require('../../US_FL.csv');
+
+
+var Papa = require("papaparse/papaparse.min.js");
+
 
 
 
@@ -552,12 +526,19 @@ class Dashboard extends Component {
     fl_daily_main: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
     us_daily: [0,0,0,0,0,0,0],
     fl_options: {},
+    county: "",
+    change: false,
+    fl_week: [],
+    us_estimates: {},
+    florida_estimates: {},
   }
 
 
 
   constructor(props) {
     super(props);
+    this.updateData_us = this.updateData_us.bind(this);
+    this.updateData_fl = this.updateData_fl.bind(this);
     this.toggle = this.toggle.bind(this);
     this.onRadioBtnClick = this.onRadioBtnClick.bind(this);
 
@@ -567,41 +548,127 @@ class Dashboard extends Component {
     };
 
 
-    this.state.fl_options = cardChartOpts1;
 
+
+    this.state.fl_options = cardChartOpts1;
+    this.state.county = "Orange";
   }
 
 
 
-  async componentDidMount(){
+    async componentDidMount(){
 
+      Papa.parse(us_csv, {
+        header: true,
+        dynamicTyping: false,
+        delimiter: ",",
+        download: true,
+      	complete:  this.updateData_us,
+      	}
+      );
 
+      Papa.parse(fl_csv, {
+        header: true,
+        dynamicTyping: false,
+        delimiter: ",",
+        download: true,
+        complete:  this.updateData_fl,
+        }
+      );
+
+    /*  Papa.parse(fl_csv, {
+        header: true,
+        dynamicTyping: false,
+        delimiter: ",",
+        download: true,
+      	complete: function(results) {
+          csv_data(results);
+      	}
+      }); */
+      //console.log(this.state.us_estimates);
     const country_confirmed = await get_country();
-    const orange_confirmed = await orange();
+    const orange_confirmed = await orange(this.state.county);
     const state_confirmed = await florida_total();
     const us_daily_vals = await Usa_daily();
-    const daily_vals = await Daily(8);
     const daily_vals_main = await Daily(29);
-    const oc_daily_vals = await counties_daily(daily_vals);
+    const daily_vals = daily_vals_main.slice(0,7);
+    const oc_daily_vals = await counties_daily(daily_vals,this.state.county);
     const state_daily_vals = await state_daily(daily_vals,6);
     const state_daily_main = await state_daily(daily_vals_main,27);
-
+    mainChart.datasets[0].data = state_daily_main;
+    cardChartData1.datasets[0].data = state_daily_vals;
+    cardChartData2.datasets[0].data = oc_daily_vals;
+    cardChartData4.datasets[0].data = us_daily_vals;
 
 
 
     this.setState({country: this.formatNumber(country_confirmed), orange: this.formatNumber(orange_confirmed), total: this.formatNumber(state_confirmed)
-      ,fl_daily: state_daily_vals, counties_daily: oc_daily_vals, us_daily: us_daily_vals, fl_daily_main: state_daily_main});
-    mainChart.datasets[0].data = this.state.fl_daily_main;
-    cardChartData1.datasets[0].data = this.state.fl_daily;
-    cardChartData2.datasets[0].data = this.state.counties_daily;
-    cardChartData4.datasets[0].data = this.state.us_daily;
-    cardChartOpts1.scales.yAxes[0].ticks.min =  Math.min.apply(Math, this.state.fl_daily) - 5000;
-    cardChartOpts1.scales.yAxes[0].ticks.max =  Math.max.apply(Math, this.state.fl_daily) + 5000;
-    this.setState({fl_options: cardChartOpts1});
+    ,fl_daily: state_daily_vals, counties_daily: oc_daily_vals, us_daily: us_daily_vals, fl_daily_main: state_daily_main, county: navigation.items[0].name, fl_week: daily_vals});
+    let store = this.state.florida_estimates;
+    mainChart.datasets[1].data = store;
+    this.setState({florida_estimates: store});
+
+
+
+
+    //cardChartOpts1.scales.yAxes[0].ticks.min =  Math.min.apply(Math, this.state.fl_daily) - 5000;
+    //cardChartOpts1.scales.yAxes[0].ticks.max =  Math.max.apply(Math, this.state.fl_daily) + 5000;
+  }
+
+  async componentDidUpdate(){
+    if(change==true){
+      change=false;
+      const orange_confirmed = await orange(this.state.county);
+      const daily_vals = await counties_daily(this.state.fl_week,this.state.county);
+      cardChartData2.datasets[0].data = daily_vals;
+      this.setState({orange: this.formatNumber(orange_confirmed), counties_daily: daily_vals});
+    }
 
 
   }
 
+
+
+async updateData_us(result) {
+    const data = await result.data;
+    let vals= {};
+    let final = [];
+    for(let i =0; i<data.length;i++)
+      {
+        if(data[i].date == curdayr(1))
+        {
+          vals = data.slice(i-28,i);
+        }
+      }
+
+      for(let k = 0; k<vals.length;k++)
+      {
+        final[k] = vals[k].predicted_current_infected_mean;
+      }
+    this.setState({us_estimates: final});
+
+  }
+
+
+
+  async updateData_fl(result) {
+      const data = await result.data;
+      let final = [];
+      let vals= {};
+      for(let i =0; i<data.length;i++)
+        {
+          if(data[i].date == curdayr(1))
+          {
+            vals = data.slice(i-28,i);
+          }
+        }
+        for(let k = 0; k<vals.length;k++)
+        {
+          final[k] = vals[k].predicted_current_infected_mean;
+        }
+      this.setState({florida_estimates: final});
+         console.log(final);
+    }
 
   formatNumber(num){
    return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
@@ -618,6 +685,10 @@ class Dashboard extends Component {
     this.setState({
       radioSelected: radioSelected,
     });
+  }
+
+  florida_clicked(){
+    alert("clicked");
   }
 
   loading = () => <div className="animated fadeIn pt-1 text-center">Loading...</div>
@@ -740,11 +811,9 @@ class Dashboard extends Component {
             </Card>
           </Col>
         </Row>
-
-              <Florida    style={{
-      width: "100%",
-      height: "auto",
-   }} />
+              <div onClick={ ()=>{change = true; this.setState({county: navigation.items[0].name}); }}>
+              <Florida />
+              </div>
 
 
       </div>
