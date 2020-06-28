@@ -1,7 +1,9 @@
+const county = 'Orange';
+
 export default {
   items: [
     {
-      name: 'Orange County',
+      name: county,
       url: '/dashboard',
     },
     {
@@ -15,11 +17,11 @@ export default {
     },
     {
       name: 'State of Emergency',
-      url: '/theme/colors',
+      url: '/',
     },
     {
       name: 'Current Restrictions',
-      url: '/theme/typography',
+      url: '/',
 
     },
     {
@@ -32,64 +34,24 @@ export default {
     },
     {
       name: 'Testing Locations',
-      url: '/base',
       children: [
         {
           name: 'Location 1',
-          url: '/base/breadcrumbs',
         },
         {
           name: 'Location 2',
-          url: '/base/cards',
         },
         {
           name: 'Location 3',
-          url: '/base/carousels',
         },
       ],
     },
     {
       name: 'Plan for Florida’s Recovery.',
-      url: '/buttons',
-      children: [
-        {
-          name: 'Phase 1',
-          url: '/buttons/buttons',
-        },
-        {
-          name: 'Phase 2',
-          url: '/buttons/button-dropdowns',
-        },
-        {
-          name: 'What is Currently Open',
-          url: '/buttons/button-groups',
-        },
-      ],
+      url: 'https://www.flgov.com/wp-content/uploads/covid19/Taskforce%20Report.pdf',
     },
     {
       divider: true,
     },
-    {
-      name: 'Tables',
-      url: '/base/tables',
-    },
-    {
-      name: 'Pages',
-      url: '/pages',
-      children: [
-        {
-          name: 'Error 404',
-          url: '/404',
-          icon: 'icon-star',
-        },
-        {
-          name: 'Error 500',
-          url: '/500',
-          icon: 'icon-star',
-        },
-      ],
-    },
-
-
   ],
 };

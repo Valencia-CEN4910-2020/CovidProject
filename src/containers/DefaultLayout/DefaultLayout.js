@@ -1,4 +1,4 @@
-import React, { Component, Suspense } from 'react';
+import React, { Component, Suspense,useState } from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import * as router from 'react-router-dom';
 import { Container } from 'reactstrap';
@@ -20,18 +20,33 @@ import navigation from '../../_nav';
 // routes config
 import routes from '../../routes';
 
+
 const DefaultAside = React.lazy(() => import('./DefaultAside'));
 const DefaultFooter = React.lazy(() => import('./DefaultFooter'));
 const DefaultHeader = React.lazy(() => import('./DefaultHeader'));
 
-class DefaultLayout extends Component {
 
+class DefaultLayout extends Component {
   loading = () => <div className="animated fadeIn pt-1 text-center">Loading...</div>
+  state = {
+    county: "",
+  }
+
+  constructor(props) {
+    super(props);
+
+    this.state.county = navigation.items[0].name;
+  }
+
+  async componentDidUpdate(){
+
+    }
 
   signOut(e) {
     e.preventDefault()
     this.props.history.push('/login')
   }
+
 
   render() {
     return (
@@ -42,14 +57,12 @@ class DefaultLayout extends Component {
           </Suspense>
         </AppHeader>
         <div className="app-body">
-          <AppSidebar fixed display="lg">
+          <AppSidebar  fixed >
             <AppSidebarHeader />
             <AppSidebarForm />
-            <Suspense>
-            <AppSidebarNav navConfig={navigation} {...this.props} router={router}/>
+            <Suspense >
+            <AppSidebarNav  navConfig={navigation} {...this.props} router={router}/>
             </Suspense>
-            <AppSidebarFooter />
-            <AppSidebarMinimizer />
           </AppSidebar>
           <main className="main">
             <Container fluid>
