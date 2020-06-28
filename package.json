@@ -3,7 +3,7 @@
   "version": "2.6.1",
   "description": "CoreUI React Open Source Bootstrap 4 Admin Template",
   "author": "Łukasz Holeczek",
-  "homepage": "https://coreui.io",
+  "homepage": "http://Valencia-CEN4910-2020.github.io/DeployedMaster",
   "copyright": "Copyright 2017-2019 creativeLabs Łukasz Holeczek",
   "license": "MIT",
   "private": true,
@@ -39,10 +39,13 @@
     "simple-line-icons": "^2.4.1"
   },
   "devDependencies": {
+    "gh-pages": "^3.1.0",
     "react-scripts": "^3.4.1"
   },
   "scripts": {
     "start": "react-scripts start",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "test:cov": "npm test -- --coverage --watchAll=false",
