@@ -367,6 +367,7 @@ class Dashboard extends Component {
     us_estimates: {},
     florida_estimates: {},
     main_title: "",
+    mounted: false,
   }
 
 
@@ -412,12 +413,10 @@ class Dashboard extends Component {
         }
       );
 
-      console.log(this.state.florida_estimates)
     const country_confirmed = await get_country();
     const orange_confirmed = await orange(this.state.county);
     const state_confirmed = await florida_total();
     const us_daily_main_vals = await Usa_daily(us_url);
-    console.log(us_url);
     const us_daily_vals = us_daily_main_vals.slice(21,28);
     const daily_vals_main = await Daily(29);
     const daily_vals = daily_vals_main.slice(0,7);
@@ -438,6 +437,7 @@ class Dashboard extends Component {
     let store = this.state.florida_estimates;
     mainChart.datasets[1].data = store;
     this.setState({florida_estimates: store});
+    this.state.mounted = true;
 
 
 
@@ -446,7 +446,7 @@ class Dashboard extends Component {
   async componentDidUpdate(){
     let vals;
     let vals2;
-    if(change==true){
+    if(change==true && this.state.mounted == true){
       change=false;
       const orange_confirmed = await orange(this.state.county);
       const daily_vals = await counties_daily(this.state.fl_week,this.state.county);

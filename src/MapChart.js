@@ -19,6 +19,7 @@ const change_county = (county) =>{
 }
 
 
+
 const MapChart = ({ setTooltipContent }) => {
 
   return (
@@ -34,7 +35,7 @@ const MapChart = ({ setTooltipContent }) => {
 
 }}
 >
-<ZoomableGroup onMoveStart={()=>{console.log("hello")}} center={[ -83,27.5]} >
+<ZoomableGroup center={[ -83,27.5]} >
           <Geographies geography={geoUrl} >
             {({ geographies }) =>
               geographies.map(geo => (
@@ -46,7 +47,7 @@ const MapChart = ({ setTooltipContent }) => {
                     let confirmed;
                     let deaths;
                     let counties = await Counties();
-            
+
                     const name = geo.properties.NAME;
                     for(let i=0;i<counties.length;i++)
                     {
