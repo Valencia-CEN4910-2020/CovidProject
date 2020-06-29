@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/valencia-cen4910-2020/CovidProject/precache-manifest.61852930a5d6d002c22fb1b547a4f067.js"
+  "/valencia-cen4910-2020/CovidProject/precache-manifest.9c719c5580489c0690c1b94b265624d5.js"
 );
 
 self.addEventListener('message', (event) => {

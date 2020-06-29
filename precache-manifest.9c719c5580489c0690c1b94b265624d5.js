@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "562786aa789f12e21779a6dc1184ce84",
+    "revision": "ad629318d585254dd54e599ca9cb1530",
     "url": "/valencia-cen4910-2020/CovidProject/index.html"
   },
   {
@@ -12,7 +12,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/valencia-cen4910-2020/CovidProject/static/css/9.85f19f90.chunk.css"
   },
   {
-    "revision": "902adda0a793b366558f",
+    "revision": "c036884aa6649b24d10b",
     "url": "/valencia-cen4910-2020/CovidProject/static/css/main.ef614fbf.chunk.css"
   },
   {
@@ -276,8 +276,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/valencia-cen4910-2020/CovidProject/static/js/9.189ea69e.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "902adda0a793b366558f",
-    "url": "/valencia-cen4910-2020/CovidProject/static/js/main.84d24d3b.chunk.js"
+    "revision": "c036884aa6649b24d10b",
+    "url": "/valencia-cen4910-2020/CovidProject/static/js/main.dfa74006.chunk.js"
   },
   {
     "revision": "44eeb24f18d34b4f2d21",
