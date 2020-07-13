@@ -2,7 +2,13 @@ import React, { useState } from "react";
 import ReactDOM from "react-dom";
 
 
+<<<<<<< Updated upstream
 
+=======
+/**
+ * Collects USA daily Covid Information from the api
+ */
+>>>>>>> Stashed changes
 const Usa_daily = async (url) =>{
   let vals = [];
 

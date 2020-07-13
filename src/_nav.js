@@ -22,6 +22,7 @@ export default {
     {
       name: 'Current Restrictions',
       url: '/',
+<<<<<<< Updated upstream
 
     },
     {
@@ -31,6 +32,8 @@ export default {
         element: '',
         attributes: {},
       },
+=======
+>>>>>>> Stashed changes
     },
     {
       name: 'Testing Locations',

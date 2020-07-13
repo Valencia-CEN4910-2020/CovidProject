@@ -25,7 +25,13 @@ const DefaultAside = React.lazy(() => import('./DefaultAside'));
 const DefaultFooter = React.lazy(() => import('./DefaultFooter'));
 const DefaultHeader = React.lazy(() => import('./DefaultHeader'));
 
+<<<<<<< Updated upstream
 
+=======
+/**
+ * Default Layout
+ */
+>>>>>>> Stashed changes
 class DefaultLayout extends Component {
   loading = () => <div className="animated fadeIn pt-1 text-center">Loading...</div>
   state = {
@@ -47,7 +53,13 @@ class DefaultLayout extends Component {
     this.props.history.push('/login')
   }
 
+<<<<<<< Updated upstream
 
+=======
+  /**
+   * Renders The Dashboard
+   */
+>>>>>>> Stashed changes
   render() {
     return (
       <div className="app">

@@ -1,7 +1,18 @@
 import React, { useState } from "react";
 import ReactDOM from "react-dom";
+<<<<<<< Updated upstream
 
 const daily_url = "https://covid19.mathdro.id/api/daily/";
+=======
+/**
+ *api url
+ */
+const daily_url = "https://covid19.mathdro.id/api/daily/";
+
+/**
+ * Collects Daily Covid Information from the api
+ */
+>>>>>>> Stashed changes
 const Daily = async (n) => {
   let response;
   let data;
@@ -18,7 +29,13 @@ for(let i =1;i<n;i++)
 return florida;
 
 }
+<<<<<<< Updated upstream
 
+=======
+/**
+ * Selects Florida data from collection
+ */
+>>>>>>> Stashed changes
 const get_florida = async(data)=>{
   let florida =[];
   for (let i = 0; i < data.length; i++) {
@@ -29,7 +46,13 @@ const get_florida = async(data)=>{
   }
   return florida;
 }
+<<<<<<< Updated upstream
 
+=======
+/**
+ * Returns date in format consistent with the api
+ */
+>>>>>>> Stashed changes
 const curday =(day)=> {
 const dash = "-"
 let date = new Date();

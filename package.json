@@ -3,6 +3,7 @@
   "version": "2.6.1",
   "description": "CoreUI React Open Source Bootstrap 4 Admin Template",
   "author": "Łukasz Holeczek",
+<<<<<<< Updated upstream
   "homepage": "https://github.com/Valencia-CEN4910-2020/CovidProject",
   "copyright": "Copyright 2017-2019 creativeLabs Łukasz Holeczek",
   "license": "MIT",
@@ -10,6 +11,15 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/Valencia-CEN4910-2020/CovidProject"
+=======
+  "homepage": "https://testing-8f37b.web.app",
+  "copyright": "Copyright 2017-2019 creativeLabs Łukasz Holeczek",
+  "license": "MIT",
+  "private": false,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/valencia-cen4910-2020/CovidProject"
+>>>>>>> Stashed changes
   },
   "dependencies": {
     "@coreui/coreui": "^2.1.16",
@@ -51,7 +61,11 @@
     "test:debug": "react-scripts --inspect-brk test --runInBand",
     "eject": "react-scripts eject",
     "predeploy": "npm run build",
+<<<<<<< Updated upstream
     "deploy": "gh-pages -d build"
+=======
+    "deploy": "firebase build"
+>>>>>>> Stashed changes
   },
   "bugs": {
     "url": "https://github.com/coreui/coreui-free-react-admin-template/issues"
