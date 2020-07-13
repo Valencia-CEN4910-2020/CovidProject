@@ -2,7 +2,10 @@ import React, { useState } from "react";
 import ReactDOM from "react-dom";
 
 
-
+/**
+ * Collects USA daily Covid Information from the api
+ * returns array of confirmed cases
+ */
 const Usa_daily = async (url) =>{
   let vals = [];
 

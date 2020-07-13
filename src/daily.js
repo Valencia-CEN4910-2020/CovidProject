@@ -1,7 +1,15 @@
 import React, { useState } from "react";
 import ReactDOM from "react-dom";
 
+/**
+ *api url
+ */
 const daily_url = "https://covid19.mathdro.id/api/daily/";
+
+/**
+ * Collects Daily Covid Information from the api
+ * Returns array of daily florida covid information
+ */
 const Daily = async (n) => {
   let response;
   let data;
@@ -19,6 +27,10 @@ return florida;
 
 }
 
+/**
+ * Selects Florida data from collection
+ */
+
 const get_florida = async(data)=>{
   let florida =[];
   for (let i = 0; i < data.length; i++) {
@@ -30,6 +42,9 @@ const get_florida = async(data)=>{
   return florida;
 }
 
+/**
+ * Returns date in format consistent with the api
+ */
 const curday =(day)=> {
 const dash = "-"
 let date = new Date();

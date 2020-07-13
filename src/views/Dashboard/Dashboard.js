@@ -28,9 +28,13 @@ import Florida from "../../florida";
 import Counties from "../../counties";
 import Daily from "../../daily";
 import Usa_daily from "../../usa_daily";
+import testing from "../../testing";
 
 
 const Widget03 = lazy(() => import('../../views/Widgets/Widget03'));
+/**
+ * returns the date in a format cosistent for the api
+ */
 const curday =(day)=> {
 const dash = "-"
 let date = new Date();
@@ -44,6 +48,10 @@ if(mm<10) mm='0'+mm;
 return (mm+dash+dd+dash+yyyy);
 };
 
+
+/**
+ * returns the date in a format cosistent for the api
+ */
 const curdayr =(day)=> {
 const dash = "-"
 let date = new Date();
@@ -68,7 +76,10 @@ const daily_url ="https://covid19.mathdro.id/api/daily/";
 let change = false;
 
 
-// Card Chart 1
+// Card Chart
+/**
+ * State confirmed cases data
+ */
 const cardChartData1 = {
     labels: [curday(7), curday(6), curday(5), curday(4), curday(3), curday(2), curday(1)],
   datasets: [
@@ -82,6 +93,9 @@ const cardChartData1 = {
 };
 
 
+/**
+ * State confirmed cases Options
+ */
 const cardChartOpts1 = {
   tooltips: {
     enabled: false,
@@ -104,6 +118,10 @@ const cardChartOpts1 = {
 
 
 // Card Chart 2
+
+/**
+ * County confirmed cases data
+ */
 const cardChartData2 = {
   labels:[curday(7), curday(6), curday(5), curday(4), curday(3), curday(2), curday(1)],
   datasets: [
@@ -115,6 +133,11 @@ const cardChartData2 = {
     },
   ],
 };
+
+/**
+ * County confirmed cases chart options
+ */
+
 
 const cardChartOpts2 = {
   tooltips: {
@@ -137,6 +160,10 @@ const cardChartOpts2 = {
 };
 
 // Card Chart 3
+
+/**
+ * US confirmed cases data
+ */
 const cardChartData3 = {
   labels:  [curday(7), curday(6), curday(5), curday(4), curday(3), curday(2), curday(1)],
   datasets: [
@@ -148,6 +175,10 @@ const cardChartData3 = {
     },
   ],
 };
+
+/**
+ * US confirmed cases chart options
+ */
 
 const cardChartOpts3 = {
   tooltips: {
@@ -208,7 +239,10 @@ const cardChartOpts4 = {
 
 
 
-
+// Card Chart 3
+/**
+ *Main Chart Data
+ */
 const mainChart = {
   labels: [curday(28), curday(27), curday(26), curday(25), curday(24), curday(23), curday(22), curday(21), curday(20), curday(19), curday(18), curday(17), curday(16)
   , curday(15), curday(14), curday(13), curday(12), curday(11), curday(10), curday(9), curday(8), curday(7), curday(6), curday(5), curday(4), curday(3), curday(2), curday(1)],
@@ -232,6 +266,9 @@ const mainChart = {
   ],
 };
 
+/**
+ *Main Chart Options
+ */
 const mainChartOpts = {
   tooltips: {
     enabled: false,
@@ -274,6 +311,12 @@ const mainChartOpts = {
 
 const country_url = "https://covid19.mathdro.id/api/countries/USA";
 const confirmed_url = "https://covid19.mathdro.id/api/countries/USA/confirmed";
+
+/**
+ * Country Confirned Values
+ * Connects to the api to get Confirmed cases for the US.
+ */
+
 const get_country = async () => {
 const response = await fetch(country_url);
 const country = await response.json();
@@ -282,6 +325,10 @@ return val;
 }
 
 
+/**
+ * Returns Confirmed cases for selected county
+ * converts csv files with US projections to json
+ */
 
 const orange = async (county)=>{
   let val;
@@ -293,6 +340,12 @@ const orange = async (county)=>{
   }
   return val;
 }
+
+
+
+/**
+ * Returns array of confirmed values for the week for selected county
+ */
 
 const counties_daily = async (data,county)=>{
   let val=[];
@@ -306,6 +359,10 @@ const counties_daily = async (data,county)=>{
   return val;
 }
 
+/**
+ * Returns confirmed cases for the state of Florida
+ */
+
 const florida_total = async ()=>{
   let val=0;
   let data = await Counties();
@@ -316,6 +373,10 @@ const florida_total = async ()=>{
 }
 
 
+
+/**
+ * Returns array of confirmed cases for the state of Florida
+ */
 
 const state_daily = async (data,n)=>{
   let val =[];
@@ -331,6 +392,8 @@ val[n-i]=parseInt(val[n-i])+parseInt(data[i][k].confirmed);
 return val;
 }
 let est = {}
+
+
 const csv_data = (data)=>{
   		est = data;
 }
@@ -348,6 +411,9 @@ var us_url= "https://api.covid19api.com/total/country/united-states?from=" + cur
 
 
 
+/**
+ * Dashboard
+ */
 
 class Dashboard extends Component {
   state = {
@@ -371,6 +437,10 @@ class Dashboard extends Component {
   }
 
 
+  /**
+   * @constructor
+   * @param {prop}
+   */
 
   constructor(props) {
     super(props);
@@ -389,12 +459,20 @@ class Dashboard extends Component {
     this.state.main_title="Florida Confirmed Covid Cases vs Estimates";
     this.state.fl_options = cardChartOpts1;
     this.state.county = "Orange";
+    navigation.items[5].children = testing.Orange;
   }
 
 
 
+  /**
+   *Collects data from api's when components mount
+   */
     async componentDidMount(){
 
+      /**
+       * Papaparse
+       * converts csv files with US projections to json
+       */
       Papa.parse(us_csv, {
         header: true,
         dynamicTyping: false,
@@ -403,6 +481,12 @@ class Dashboard extends Component {
       	complete:  this.updateData_us,
       	}
       );
+
+
+      /**
+       * Papaparse
+       * converts csv files with FL projections to json
+       */
 
       Papa.parse(fl_csv, {
         header: true,
@@ -443,6 +527,12 @@ class Dashboard extends Component {
 
   }
 
+
+  /**
+   * Renders components when selected county changes
+   */
+
+
   async componentDidUpdate(){
     let vals;
     let vals2;
@@ -480,6 +570,10 @@ class Dashboard extends Component {
 
 
 
+  /**
+   * Sets main chart to Us
+   */
+
 async updateData_us(result) {
     const data = await result.data;
     let vals= {};
@@ -501,6 +595,9 @@ async updateData_us(result) {
   }
 
 
+  /**
+   * Sets main chart to FLorida
+   */
 
   async updateData_fl(result) {
       const data = await result.data;
@@ -521,6 +618,12 @@ async updateData_us(result) {
 
     }
 
+
+
+    /**
+     *Formats the numbers
+     */
+
   formatNumber(num){
    return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
  }
@@ -532,6 +635,9 @@ async updateData_us(result) {
     });
   }
 
+  /**
+   * Map toggle
+   */
   onRadioBtnClick(radioSelected) {
     if(radioSelected !=this.state.radioSelected)
     {
@@ -546,6 +652,10 @@ async updateData_us(result) {
 }
 
   loading = () => <div className="animated fadeIn pt-1 text-center">Loading...</div>
+
+  /**
+   * Renders the dashboard
+   */
 
   render() {
 

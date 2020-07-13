@@ -5,7 +5,9 @@ import navigation from './_nav';
 
 
 import MapChart from "./MapChart";
-
+/**
+ * Creates FLorida Map Component
+ */
 function Florida() {
   const [content, setContent] = useState("");
   return (

@@ -1,6 +1,11 @@
 import React, { useState } from "react";
 import ReactDOM from "react-dom";
 
+/**
+ * Collects Daily Covid Information from the api
+ * returns array of daily covid information for each florida county
+ */
+
 const Daily = async () => {
   let response;
   let data;
@@ -17,6 +22,10 @@ for(let i =1;i<8;i++)
 return florida;
 }
 
+/**
+ * Selects Florida data from collection
+ */
+
 const get_florida = async(data)=>{
   let florida =[];
   for (let i = 0; i < data.length; i++) {
@@ -27,6 +36,10 @@ const get_florida = async(data)=>{
   }
   return florida;
 }
+
+/**
+ * Returns date in format consistent with the api
+ */
 
 const curday =(day)=> {
 const dash = "-"

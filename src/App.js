@@ -14,7 +14,10 @@ const Login = React.lazy(() => import('./views/Pages/Login'));
 const Register = React.lazy(() => import('./views/Pages/Register'));
 const Page404 = React.lazy(() => import('./views/Pages/Page404'));
 const Page500 = React.lazy(() => import('./views/Pages/Page500'));
-
+/**
+ * Selects which page to render based on user selection
+ * Default is Dashboard from Default Layout
+ */
 class App extends Component {
 
   render() {

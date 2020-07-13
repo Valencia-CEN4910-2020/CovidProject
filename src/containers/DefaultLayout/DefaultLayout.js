@@ -26,6 +26,10 @@ const DefaultFooter = React.lazy(() => import('./DefaultFooter'));
 const DefaultHeader = React.lazy(() => import('./DefaultHeader'));
 
 
+/**
+ * Default Layout
+ * Combines the Dashboard, header, sidebar and footer components to form the default dashboard page
+ */
 class DefaultLayout extends Component {
   loading = () => <div className="animated fadeIn pt-1 text-center">Loading...</div>
   state = {
@@ -46,7 +50,6 @@ class DefaultLayout extends Component {
     e.preventDefault()
     this.props.history.push('/login')
   }
-
 
   render() {
     return (

@@ -12,7 +12,10 @@ const propTypes = {
 };
 
 const defaultProps = {};
-
+/**
+ * Default Header
+ * Renders the sidebar toggler and title
+ */
 class DefaultHeader extends Component {
   render() {
 
@@ -20,12 +23,13 @@ class DefaultHeader extends Component {
     const { children, ...attributes } = this.props;
 
     return (
-      <React.Fragment>
+      <div >
         <AppSidebarToggler className="d-lg-none" display="md" mobile />
         <AppSidebarToggler className="d-md-down-none" display="lg" />
+        <h1 style ={{float:"right"}} >Covid Tracker</h1>
 
         {/*<AppAsideToggler className="d-lg-none" mobile />*/}
-      </React.Fragment>
+      </div>
     );
   }
 }

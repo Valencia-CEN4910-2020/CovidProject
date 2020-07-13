@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: containers/DefaultLayout/DefaultLayout.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: containers/DefaultLayout/DefaultLayout.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React, { Component, Suspense,useState } from 'react';
+import { Redirect, Route, Switch } from 'react-router-dom';
+import * as router from 'react-router-dom';
+import { Container } from 'reactstrap';
+
+import {
+  AppAside,
+  AppFooter,
+  AppHeader,
+  AppSidebar,
+  AppSidebarFooter,
+  AppSidebarForm,
+  AppSidebarHeader,
+  AppSidebarMinimizer,
+  AppBreadcrumb2 as AppBreadcrumb,
+  AppSidebarNav2 as AppSidebarNav,
+} from '@coreui/react';
+// sidebar nav config
+import navigation from '../../_nav';
+// routes config
+import routes from '../../routes';
+
+
+const DefaultAside = React.lazy(() => import('./DefaultAside'));
+const DefaultFooter = React.lazy(() => import('./DefaultFooter'));
+const DefaultHeader = React.lazy(() => import('./DefaultHeader'));
+
+
+/**
+ * Default Layout
+ * Combines the Dashboard, header, sidebar and footer components to form the default dashboard page
+ */
+class DefaultLayout extends Component {
+  loading = () => &lt;div className="animated fadeIn pt-1 text-center">Loading...&lt;/div>
+  state = {
+    county: "",
+  }
+
+  constructor(props) {
+    super(props);
+
+    this.state.county = navigation.items[0].name;
+  }
+
+  async componentDidUpdate(){
+
+    }
+
+  signOut(e) {
+    e.preventDefault()
+    this.props.history.push('/login')
+  }
+
+  render() {
+    return (
+      &lt;div className="app">
+        &lt;AppHeader fixed>
+          &lt;Suspense  fallback={this.loading()}>
+            &lt;DefaultHeader onLogout={e=>this.signOut(e)}/>
+          &lt;/Suspense>
+        &lt;/AppHeader>
+        &lt;div className="app-body">
+          &lt;AppSidebar  fixed >
+            &lt;AppSidebarHeader />
+            &lt;AppSidebarForm />
+            &lt;Suspense >
+            &lt;AppSidebarNav  navConfig={navigation} {...this.props} router={router}/>
+            &lt;/Suspense>
+          &lt;/AppSidebar>
+          &lt;main className="main">
+            &lt;Container fluid>
+              &lt;Suspense fallback={this.loading()}>
+                &lt;Switch>
+                  {routes.map((route, idx) => {
+                    return route.component ? (
+                      &lt;Route
+                        key={idx}
+                        path={route.path}
+                        exact={route.exact}
+                        name={route.name}
+                        render={props => (
+                          &lt;route.component {...props} />
+                        )} />
+                    ) : (null);
+                  })}
+                  &lt;Redirect from="/" to="/dashboard" />
+                &lt;/Switch>
+              &lt;/Suspense>
+            &lt;/Container>
+          &lt;/main>
+          &lt;AppAside fixed>
+            &lt;Suspense fallback={this.loading()}>
+              &lt;DefaultAside />
+            &lt;/Suspense>
+          &lt;/AppAside>
+        &lt;/div>
+        &lt;AppFooter>
+          &lt;Suspense fallback={this.loading()}>
+            &lt;DefaultFooter />
+          &lt;/Suspense>
+        &lt;/AppFooter>
+      &lt;/div>
+    );
+  }
+}
+
+export default DefaultLayout;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="App.html">App</a></li><li><a href="Dashboard.html">Dashboard</a></li><li><a href="DefaultHeader.html">DefaultHeader</a></li><li><a href="DefaultLayout.html">DefaultLayout</a></li></ul><h3>Global</h3><ul><li><a href="global.html#cardChartData1">cardChartData1</a></li><li><a href="global.html#cardChartData2">cardChartData2</a></li><li><a href="global.html#cardChartData3">cardChartData3</a></li><li><a href="global.html#cardChartOpts1">cardChartOpts1</a></li><li><a href="global.html#cardChartOpts2">cardChartOpts2</a></li><li><a href="global.html#cardChartOpts3">cardChartOpts3</a></li><li><a href="global.html#change_county">change_county</a></li><li><a href="global.html#confirmed_url">confirmed_url</a></li><li><a href="global.html#Counties">Counties</a></li><li><a href="global.html#counties_daily">counties_daily</a></li><li><a href="global.html#curday">curday</a></li><li><a href="global.html#curdayr">curdayr</a></li><li><a href="global.html#Daily">Daily</a></li><li><a href="global.html#daily_url">daily_url</a></li><li><a href="global.html#Florida">Florida</a></li><li><a href="global.html#florida_total">florida_total</a></li><li><a href="global.html#geoUrl">geoUrl</a></li><li><a href="global.html#get_country">get_country</a></li><li><a href="global.html#get_florida">get_florida</a></li><li><a href="global.html#mainChart">mainChart</a></li><li><a href="global.html#mainChartOpts">mainChartOpts</a></li><li><a href="global.html#MapChart">MapChart</a></li><li><a href="global.html#orange">orange</a></li><li><a href="global.html#peopleLovePapa">peopleLovePapa</a></li><li><a href="global.html#state_daily">state_daily</a></li><li><a href="global.html#testloc">testloc</a></li><li><a href="global.html#Usa_daily">Usa_daily</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.4</a> on Mon Jul 13 2020 13:28:02 GMT-0400 (Eastern Daylight Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
