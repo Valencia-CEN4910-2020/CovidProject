@@ -6,12 +6,6 @@ import navigation from './_nav';
 
 import MapChart from "./MapChart";
 
-<<<<<<< Updated upstream
-=======
-/**
- * Creates FLorida Map Component
- */
->>>>>>> Stashed changes
 function Florida() {
   const [content, setContent] = useState("");
   return (

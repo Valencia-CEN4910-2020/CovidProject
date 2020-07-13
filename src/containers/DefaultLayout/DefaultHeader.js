@@ -20,22 +20,12 @@ class DefaultHeader extends Component {
     const { children, ...attributes } = this.props;
 
     return (
-<<<<<<< Updated upstream
       <React.Fragment>
         <AppSidebarToggler className="d-lg-none" display="md" mobile />
         <AppSidebarToggler className="d-md-down-none" display="lg" />
 
         {/*<AppAsideToggler className="d-lg-none" mobile />*/}
       </React.Fragment>
-=======
-      <div >
-        <AppSidebarToggler className="d-lg-none" display="md" mobile />
-        <AppSidebarToggler className="d-md-down-none" display="lg" />
-        <h1 style ={{float:"right"}} >Covid Tracker</h1>
-
-        {/*<AppAsideToggler className="d-lg-none" mobile />*/}
-      </div>
->>>>>>> Stashed changes
     );
   }
 }

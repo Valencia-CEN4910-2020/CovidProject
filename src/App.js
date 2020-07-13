@@ -15,15 +15,8 @@ const Register = React.lazy(() => import('./views/Pages/Register'));
 const Page404 = React.lazy(() => import('./views/Pages/Page404'));
 const Page500 = React.lazy(() => import('./views/Pages/Page500'));
 
-<<<<<<< Updated upstream
 class App extends Component {
 
-=======
-/**
- *App Component
- */
-class App extends Component {
->>>>>>> Stashed changes
   render() {
     return (
       <HashRouter>
