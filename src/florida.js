@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import ReactDOM from "react-dom";
 import ReactTooltip from "react-tooltip";
-import navigation from './_nav';
+import {navigation,testing} from './_nav';
 
 
 import MapChart from "./MapChart";

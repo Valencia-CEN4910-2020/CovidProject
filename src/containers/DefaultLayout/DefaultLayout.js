@@ -16,9 +16,10 @@ import {
   AppSidebarNav2 as AppSidebarNav,
 } from '@coreui/react';
 // sidebar nav config
-import navigation from '../../_nav';
+import * as nav from '../../_nav';
 // routes config
 import routes from '../../routes';
+import Dashboard from "../../views/Dashboard/Dashboard";
 
 
 const DefaultAside = React.lazy(() => import('./DefaultAside'));
@@ -39,11 +40,10 @@ class DefaultLayout extends Component {
   constructor(props) {
     super(props);
 
-    this.state.county = navigation.items[0].name;
+    this.state.county = nav.county.county;
   }
 
   async componentDidUpdate(){
-
     }
 
   signOut(e) {
@@ -60,31 +60,24 @@ class DefaultLayout extends Component {
           </Suspense>
         </AppHeader>
         <div className="app-body">
-          <AppSidebar  fixed >
+          <AppSidebar  fixed display="lg" >
             <AppSidebarHeader />
             <AppSidebarForm />
             <Suspense >
-            <AppSidebarNav  navConfig={navigation} {...this.props} router={router}/>
+            <AppSidebarNav  navConfig={nav.navigation} {...this.props} router={router}/>
             </Suspense>
           </AppSidebar>
           <main className="main">
             <Container fluid>
               <Suspense fallback={this.loading()}>
-                <Switch>
-                  {routes.map((route, idx) => {
-                    return route.component ? (
-                      <Route
-                        key={idx}
-                        path={route.path}
-                        exact={route.exact}
-                        name={route.name}
-                        render={props => (
-                          <route.component {...props} />
-                        )} />
-                    ) : (null);
-                  })}
-                  <Redirect from="/" to="/dashboard" />
-                </Switch>
+              <div onClick={()=>{
+                if(this.state.county!=nav.county.county)
+                {
+                  this.setState({county: nav.county.county});
+                }
+              }}>
+<Dashboard />
+</div>
               </Suspense>
             </Container>
           </main>

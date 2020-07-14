@@ -23,12 +23,12 @@ import {
 import { CustomTooltips } from '@coreui/coreui-plugin-chartjs-custom-tooltips';
 import { getStyle, hexToRgba } from '@coreui/coreui/dist/js/coreui-utilities'
 import ReactTooltip from "react-tooltip";
-import navigation from '../../_nav';
+import * as nav from '../../_nav';
 import Florida from "../../florida";
 import Counties from "../../counties";
 import Daily from "../../daily";
 import Usa_daily from "../../usa_daily";
-import testing from "../../testing";
+
 
 
 const Widget03 = lazy(() => import('../../views/Widgets/Widget03'));
@@ -341,6 +341,9 @@ const orange = async (county)=>{
   return val;
 }
 
+function formatNumber(num){
+ return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
+}
 
 
 /**
@@ -459,7 +462,7 @@ class Dashboard extends Component {
     this.state.main_title="Florida Confirmed Covid Cases vs Estimates";
     this.state.fl_options = cardChartOpts1;
     this.state.county = "Orange";
-    navigation.items[5].children = testing.Orange;
+    nav.navigation.items[5].children = nav.testing.Orange;
   }
 
 
@@ -517,7 +520,7 @@ class Dashboard extends Component {
 
     this.setState({country: this.formatNumber(country_confirmed), orange: this.formatNumber(orange_confirmed), total: this.formatNumber(state_confirmed)
     ,fl_daily: state_daily_vals, counties_daily: oc_daily_vals, us_daily: us_daily_vals, fl_daily_main: state_daily_main,
-    county: navigation.items[0].name, fl_week: daily_vals, us_daily_main: us_daily_main_vals});
+    county: nav.county.county, fl_week: daily_vals, us_daily_main: us_daily_main_vals});
     let store = this.state.florida_estimates;
     mainChart.datasets[1].data = store;
     this.setState({florida_estimates: store});
@@ -701,7 +704,7 @@ async updateData_us(result) {
         </Row>
 
 
-        <div onClick={ ()=>{change = true; this.setState({county: navigation.items[0].name}); }}>
+        <div onClick={ ()=>{change = true; this.setState({county: nav.county.county}); }}>
         <Florida />
         </div>
 

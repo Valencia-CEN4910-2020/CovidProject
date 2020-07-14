@@ -7,8 +7,7 @@ import {
 } from "react-simple-maps";
 
 import Counties from "./counties";
-import navigation from './_nav';
-import testing from './testing';
+import * as nav from './_nav';
 
 /**
  * Florida map json file
@@ -20,77 +19,78 @@ const geoUrl =
    * This funtion gets called when a county is clicked, the selected county becomes default
    */
 const change_county = (county) =>{
-  console.log(navigation);
-  navigation.items[0].name = county;
-  navigation.items[1].name = county + " County Current Status";
+  nav.county.county = county;
+  nav.navigation.items[0].name = nav.county.county +" County"
+  nav.navigation.items[1].name = county + " County Current Status";
+  nav.navigation.items[4].name = county + " County Current Resources";
   testloc(county);
 }
 
 
 /**
- * Sets Testing location based on selected county
+ * Sets testing location based on selected county
  */
 const testloc= (county) =>{
   switch(county) {
   case "Brevard":
-  navigation.items[5].children = testing.Brevard;
+  nav.navigation.items[5].children = nav.testing.Brevard;
     break;
   case "Broward":
-  navigation.items[5].children = testing.Broward;
+  nav.navigation.items[5].children = nav.testing.Broward;
     break;
   case "Charlotte":
-  navigation.items[5].children = testing.Charlotte;
+  nav.navigation.items[5].children = nav.testing.Charlotte;
     break;
   case "Duval":
-  navigation.items[5].children = testing.Duval;
+  nav.navigation.items[5].children = nav.testing.Duval;
     break;
   case "Escambia":
-  navigation.items[5].children = testing.Escambia;
+  nav.navigation.items[5].children = nav.testing.Escambia;
   break;
   case "Hillsborough":
-  navigation.items[5].children = testing.Hillsborough;
+  nav.navigation.items[5].children = nav.testing.Hillsborough;
     break;
   case "Lake":
-  navigation.items[5].children = testing.Lake;
+  nav.navigation.items[5].children = nav.testing.Lake;
       break;
   case "Lee":
-navigation.items[5].children = testing.Lee;
+nav.navigation.items[5].children = nav.testing.Lee;
       break;
   case "Leon":
-navigation.items[5].children = testing.Leon;
+nav.navigation.items[5].children = nav.testing.Leon;
     break;
   case "Manatee":
-navigation.items[5].children = testing.Manatee;
+nav.navigation.items[5].children = nav.testing.Manatee;
     break;
   case "Miami-Dade":
-      navigation.items[5].children = testing.Miami;
+      nav.navigation.items[5].children = nav.testing.Miami;
     break;
   case "Okaloosa":
-navigation.items[5].children = testing.Okaloosa;
+nav.navigation.items[5].children = nav.testing.Okaloosa;
     break;
   case "Orange":
-navigation.items[5].children = testing.Orange;
+nav.navigation.items[5].children = nav.testing.Orange;
     break;
     case "Palm Beach":
-navigation.items[5].children = testing.Palm;
+nav.navigation.items[5].children = nav.testing.Palm;
       break;
     case "Pasco":
-navigation.items[5].children = testing.Pasco;
+nav.navigation.items[5].children = nav.testing.Pasco;
     break;
     case "Polk":
-navigation.items[5].children = testing.Polk;
+nav.navigation.items[5].children = nav.testing.Polk;
     break;
     case "Sarasota":
-navigation.items[5].children = testing.Sarasota;
+nav.navigation.items[5].children = nav.testing.Sarasota;
         break;
     case "St. Lucie":
-navigation.items[5].children = testing.Lucie;
+nav.navigation.items[5].children = nav.testing.Lucie;
       break;
     case "Volusia":
-navigation.items[5].children = testing.Volusia;
+nav.navigation.items[5].children = nav.testing.Volusia;
         break;
   default:
-  navigation.items[5].children = testing.None;
+  nav.navigation.items[5].children = nav.testing.None;
 }
 }
 
@@ -126,12 +126,11 @@ function handleMoveEnd(position) {
   return (
     <>
       <ComposableMap data-tip=""
-      projectionConfig={{ scale: 3000 }}
+      projectionConfig={{ scale: 4500 }}
    width={800}
-   height={400}
+   height={600}
    style={{
-   width: "50%",
-   height: "25%",
+   width: "70%",
    float: "right",
 
 }}
@@ -172,7 +171,7 @@ function handleMoveEnd(position) {
                       fill: "black",
                       outline: "none",
                       stroke: "white",
-                      strokeWidth: "2px",
+                      strokeWidth: "1px",
                     },
                     hover: {
                       fill: "#F53",
