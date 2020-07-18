@@ -24,6 +24,19 @@
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
     <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script>
+  window.watsonAssistantChatOptions = {
+      integrationID: "11ab91ff-9181-4f4b-8a59-1ec5423f3a36", // The ID of this integration.
+      region: "us-south", // The region your integration is hosted in.
+      serviceInstanceID: "273d62c6-8443-490b-b5c4-8e02c5cabd53", // The ID of your service instance.
+      onLoad: function(instance) { instance.render(); }
+    };
+  setTimeout(function(){
+    const t=document.createElement('script');
+    t.src="https://web-chat.global.assistant.watson.appdomain.cloud/loadWatsonAssistantChat.js";
+    document.head.appendChild(t);
+  });
+</script>
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-118965717-3"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
