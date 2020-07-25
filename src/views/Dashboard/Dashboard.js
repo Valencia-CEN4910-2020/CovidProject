@@ -1,28 +1,19 @@
-import React, { Component, lazy, Suspense, useState } from 'react';
-import { Bar, Line } from 'react-chartjs-2';
+import React, { Component,} from 'react';
+import {Line, } from 'react-chartjs-2';
 import {
-  Badge,
   Button,
-  ButtonDropdown,
   ButtonGroup,
   ButtonToolbar,
   Card,
   CardBody,
   CardFooter,
-  CardHeader,
   CardTitle,
   Col,
-  Dropdown,
-  DropdownItem,
-  DropdownMenu,
-  DropdownToggle,
   Progress,
   Row,
-  Table,
 } from 'reactstrap';
 import { CustomTooltips } from '@coreui/coreui-plugin-chartjs-custom-tooltips';
 import { getStyle, hexToRgba } from '@coreui/coreui/dist/js/coreui-utilities'
-import ReactTooltip from "react-tooltip";
 import * as nav from '../../_nav';
 import Florida from "../../florida";
 import Counties from "../../counties";
@@ -30,8 +21,6 @@ import Daily from "../../daily";
 import Usa_daily from "../../usa_daily";
 
 
-
-const Widget03 = lazy(() => import('../../views/Widgets/Widget03'));
 /**
  * returns the date in a format cosistent for the api
  */
@@ -70,9 +59,6 @@ return (yyyy+dash+mm+dash+dd);
 const brandPrimary = getStyle('--primary')
 const brandSuccess = getStyle('--success')
 const brandInfo = getStyle('--info')
-const brandWarning = getStyle('--warning')
-const brandDanger = getStyle('--danger')
-const daily_url ="https://covid19.mathdro.id/api/daily/";
 let change = false;
 
 
@@ -164,41 +150,13 @@ const cardChartOpts2 = {
 /**
  * US confirmed cases data
  */
-const cardChartData3 = {
-  labels:  [curday(7), curday(6), curday(5), curday(4), curday(3), curday(2), curday(1)],
-  datasets: [
-    {
-      label: 'Confirmed Cases',
-      backgroundColor: 'rgba(255,255,255,.2)',
-      borderColor: 'rgba(255,255,255,.55)',
-      data: [150000, 150000, 150000, 150000, 150000, 150000, 150000],
-    },
-  ],
-};
+
 
 /**
  * US confirmed cases chart options
  */
 
-const cardChartOpts3 = {
-  tooltips: {
-    enabled: false,
-    custom: CustomTooltips
-  },
-  maintainAspectRatio: false,
-  legend: {
-    display: false,
-  },
-  scales: {
-    xAxes: [
-      {
-        display: false,
-      }],
-    yAxes: [
-      {
-      }],
-  },
-};
+
 
 // Card Chart 4
 const cardChartData4 = {
@@ -310,7 +268,6 @@ const mainChartOpts = {
 
 
 const country_url = "https://covid19.mathdro.id/api/countries/USA";
-const confirmed_url = "https://covid19.mathdro.id/api/countries/USA/confirmed";
 
 /**
  * Country Confirned Values
@@ -341,9 +298,7 @@ const orange = async (county)=>{
   return val;
 }
 
-function formatNumber(num){
- return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
-}
+
 
 
 /**
@@ -394,12 +349,10 @@ val[n-i]=parseInt(val[n-i])+parseInt(data[i][k].confirmed);
 }
 return val;
 }
-let est = {}
 
 
-const csv_data = (data)=>{
-  		est = data;
-}
+
+
 
 
 var us_csv = require('../../US.csv');
@@ -537,8 +490,7 @@ class Dashboard extends Component {
 
 
   async componentDidUpdate(){
-    let vals;
-    let vals2;
+    
     if(change==true && this.state.mounted == true){
       change=false;
       const orange_confirmed = await orange(this.state.county);

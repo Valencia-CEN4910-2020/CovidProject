@@ -1,29 +1,22 @@
-import React, { Component, Suspense,useState } from 'react';
-import { Redirect, Route, Switch } from 'react-router-dom';
+import React, { Component, Suspense,} from 'react';
 import * as router from 'react-router-dom';
 import { Container } from 'reactstrap';
 
 import {
   AppAside,
-  AppFooter,
   AppHeader,
   AppSidebar,
-  AppSidebarFooter,
   AppSidebarForm,
   AppSidebarHeader,
-  AppSidebarMinimizer,
-  AppBreadcrumb2 as AppBreadcrumb,
   AppSidebarNav2 as AppSidebarNav,
 } from '@coreui/react';
 // sidebar nav config
 import * as nav from '../../_nav';
 // routes config
-import routes from '../../routes';
 import Dashboard from "../../views/Dashboard/Dashboard";
 
 
 const DefaultAside = React.lazy(() => import('./DefaultAside'));
-const DefaultFooter = React.lazy(() => import('./DefaultFooter'));
 const DefaultHeader = React.lazy(() => import('./DefaultHeader'));
 
 

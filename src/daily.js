@@ -1,6 +1,3 @@
-import React, { useState } from "react";
-import ReactDOM from "react-dom";
-
 /**
  *api url
  */
@@ -15,7 +12,6 @@ const Daily = async (n) => {
   let data;
   let florida = [];
 let holder;
-let val = 0;
 for(let i =1;i<n;i++)
 {
   response = await fetch(daily_url+curday(i));
