@@ -1,6 +1,6 @@
 # Covid Tracker
 
-Covid Tracker was built to respond to IBM's Call for Code Challenge as part of our summer 2020 Senior Design project at Valencia College. Covid Tracker was built to display unbiased COVID-19 statistics for the state of Florida, but can be easily expanded to include other states and countries. 
+Covid Tracker was built to respond to IBM's Call for Code Challenge as part of our summer 2020 Senior Design project at Valencia College. Covid Tracker displays unbiased COVID-19 statistics for the state of Florida, but can be easily expanded to include other states and countries. 
 
 What sets Covid Tracker apart from the rest of the COVID dashboards is it compares actual infection rates against the original projected rates.
 
