@@ -191,7 +191,7 @@ const MapChart = ({ setTooltipContent }) => {
         </ZoomableGroup>
       </ComposableMap>
 
-      <div className="controls" style={{position:"static",transform: "translatey(-545px)", float: "right",paddingRight: "10px",  top: 0,
+      <div className="controls" style={{position:"flex",transform: "translatey(-310px)", float: "right",paddingRight: "10px",  top: 0,
   left: "50%"}}>
         <button onClick={handleZoomIn} style={{display: "flex",
     justifyContent: "center",
