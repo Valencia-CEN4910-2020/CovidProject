@@ -1,5 +1,5 @@
-import React, { Component,} from 'react';
-import {Line, } from 'react-chartjs-2';
+import React, { Component, } from 'react';
+import { Line, } from 'react-chartjs-2';
 import {
   Button,
   ButtonGroup,
@@ -25,34 +25,28 @@ import Usa_daily from "../../usa_daily";
 /**
  * returns the date in a format cosistent for the api
  */
-const curday =(day)=> {
-const dash = "-"
-let date = new Date();
-date.setDate(date.getDate() - day);
-var dd = date.getDate();
-var mm = date.getMonth()+1; //As January is 0.
-var yyyy = date.getFullYear();
-
-if(dd<10) dd='0'+dd;
-if(mm<10) mm='0'+mm;
-return (mm+dash+dd+dash+yyyy);
+const curday = (day) => {
+  const dash = "-"
+  let date = new Date();
+  date.setDate(date.getDate() - day);
+  return (date.toLocaleDateString());
 };
 
 
 /**
  * returns the date in a format cosistent for the api
  */
-const curdayr =(day)=> {
-const dash = "-"
-let date = new Date();
-date.setDate(date.getDate() - day);
-var dd = date.getDate();
-var mm = date.getMonth()+1; //As January is 0.
-var yyyy = date.getFullYear();
+const curdayr = (day) => {
+  const dash = "-"
+  let date = new Date();
+  date.setDate(date.getDate() - day);
+  var dd = date.getDate();
+  var mm = date.getMonth() + 1; //As January is 0.
+  var yyyy = date.getFullYear();
 
-if(dd<10) dd='0'+dd;
-if(mm<10) mm='0'+mm;
-return (yyyy+dash+mm+dash+dd);
+  if (dd < 10) dd = '0' + dd;
+  if (mm < 10) mm = '0' + mm;
+  return (yyyy + dash + mm + dash + dd);
 };
 
 
@@ -68,13 +62,13 @@ let change = false;
  * State confirmed cases data
  */
 const cardChartData1 = {
-    labels: [curday(7), curday(6), curday(5), curday(4), curday(3), curday(2), curday(1)],
+  labels: [curday(7), curday(6), curday(5), curday(4), curday(3), curday(2), curday(1)],
   datasets: [
     {
       label: 'Confirmed Cases',
       backgroundColor: brandPrimary,
       borderColor: 'rgba(255,255,255,.55)',
-      data: [0,0,0,0,0,0,0],
+      data: [0, 0, 0, 0, 0, 0, 0],
     },
   ],
 };
@@ -110,7 +104,7 @@ const cardChartOpts1 = {
  * County confirmed cases data
  */
 const cardChartData2 = {
-  labels:[curday(7), curday(6), curday(5), curday(4), curday(3), curday(2), curday(1)],
+  labels: [curday(7), curday(6), curday(5), curday(4), curday(3), curday(2), curday(1)],
   datasets: [
     {
       label: 'Confirmed Cases',
@@ -161,7 +155,7 @@ const cardChartOpts2 = {
 
 // Card Chart 4
 const cardChartData4 = {
-  labels:  [curday(7), curday(6), curday(5), curday(4), curday(3), curday(2), curday(1)],
+  labels: [curday(7), curday(6), curday(5), curday(4), curday(3), curday(2), curday(1)],
   datasets: [
     {
       label: 'Confirmed Cases',
@@ -204,7 +198,7 @@ const cardChartOpts4 = {
  */
 const mainChart = {
   labels: [curday(28), curday(27), curday(26), curday(25), curday(24), curday(23), curday(22), curday(21), curday(20), curday(19), curday(18), curday(17), curday(16)
-  , curday(15), curday(14), curday(13), curday(12), curday(11), curday(10), curday(9), curday(8), curday(7), curday(6), curday(5), curday(4), curday(3), curday(2), curday(1)],
+    , curday(15), curday(14), curday(13), curday(12), curday(11), curday(10), curday(9), curday(8), curday(7), curday(6), curday(5), curday(4), curday(3), curday(2), curday(1)],
   datasets: [
     {
       label: 'Confirmed Cases',
@@ -212,7 +206,7 @@ const mainChart = {
       borderColor: brandInfo,
       pointHoverBackgroundColor: '#fff',
       borderWidth: 2,
-      data: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+      data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     },
     {
       label: 'Projections Mean',
@@ -220,7 +214,7 @@ const mainChart = {
       borderColor: brandSuccess,
       pointHoverBackgroundColor: '#fff',
       borderWidth: 2,
-      data: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+      data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     },
   ],
 };
@@ -236,7 +230,7 @@ const mainChartOpts = {
     mode: 'index',
     position: 'nearest',
     callbacks: {
-      labelColor: function(tooltipItem, chart) {
+      labelColor: function (tooltipItem, chart) {
         return { backgroundColor: chart.data.datasets[tooltipItem.datasetIndex].borderColor }
       }
     }
@@ -276,10 +270,10 @@ const country_url = "https://covid19.mathdro.id/api/countries/USA";
  */
 
 const get_country = async () => {
-const response = await fetch(country_url);
-const country = await response.json();
-let val = await country.confirmed.value;
-return val;
+  const response = await fetch(country_url);
+  const country = await response.json();
+  let val = await country.confirmed.value;
+  return val;
 }
 
 
@@ -288,12 +282,12 @@ return val;
  * converts csv files with US projections to json
  */
 
-const orange = async (county)=>{
+const orange = async (county) => {
   let val;
   let data = await Counties();
-  for(let i = 0; i<data.length;i++){
-    if(data[i].admin2==county){
-      val=data[i].confirmed;
+  for (let i = 0; i < data.length; i++) {
+    if (data[i].admin2 == county) {
+      val = data[i].confirmed;
     }
   }
   return val;
@@ -306,14 +300,14 @@ const orange = async (county)=>{
  * Returns array of confirmed values for the week for selected county
  */
 
-const counties_daily = async (data,county)=>{
-  let val=[];
-  for(let i = 0; i<data.length;i++){
-    for(let k = 0; k<data[i].length;k++){
-    if(data[i][k].admin2==county){
-      val[6-i]=data[i][k].confirmed;
+const counties_daily = async (data, county) => {
+  let val = [];
+  for (let i = 0; i < data.length; i++) {
+    for (let k = 0; k < data[i].length; k++) {
+      if (data[i][k].admin2 == county) {
+        val[6 - i] = data[i][k].confirmed;
+      }
     }
-  }
   }
   return val;
 }
@@ -322,11 +316,11 @@ const counties_daily = async (data,county)=>{
  * Returns confirmed cases for the state of Florida
  */
 
-const florida_total = async ()=>{
-  let val=0;
+const florida_total = async () => {
+  let val = 0;
   let data = await Counties();
-  for(let i = 0; i<data.length;i++){
-    val+=data[i].confirmed;
+  for (let i = 0; i < data.length; i++) {
+    val += data[i].confirmed;
   }
   return val;
 }
@@ -337,18 +331,17 @@ const florida_total = async ()=>{
  * Returns array of confirmed cases for the state of Florida
  */
 
-const state_daily = async (data,n)=>{
-  let val =[];
-  for(let j =0; j<n+1;j++)
-  {
+const state_daily = async (data, n) => {
+  let val = [];
+  for (let j = 0; j < n + 1; j++) {
     val.push(0);
   }
-  for(let i = 0; i<data.length;i++){
-    for(let k=0;k<data[i].length;k++){
-val[n-i]=parseInt(val[n-i])+parseInt(data[i][k].confirmed);
+  for (let i = 0; i < data.length; i++) {
+    for (let k = 0; k < data[i].length; k++) {
+      val[n - i] = parseInt(val[n - i]) + parseInt(data[i][k].confirmed);
+    }
   }
-}
-return val;
+  return val;
 }
 
 
@@ -362,9 +355,9 @@ var fl_csv = require('../../US_FL.csv');
 
 var Papa = require("papaparse/papaparse.min.js");
 
-var pressed =false;
+var pressed = false;
 
-var us_url= "https://api.covid19api.com/total/country/united-states?from=" + curdayr(28) +"T00:00:00Z&to=" +curdayr(1) +"T00:00:00Z";
+var us_url = "https://api.covid19api.com/total/country/united-states?from=" + curdayr(28) + "T00:00:00Z&to=" + curdayr(1) + "T00:00:00Z";
 
 
 
@@ -378,11 +371,11 @@ class Dashboard extends Component {
     orange: {},
     osceola: {},
     total: {},
-    counties_daily:[0,0,0,0,0,0,0] ,
-    fl_daily: [0,0,0,0,0,0,0],
-    fl_daily_main: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-    us_daily_main: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-    us_daily: [0,0,0,0,0,0,0],
+    counties_daily: [0, 0, 0, 0, 0, 0, 0],
+    fl_daily: [0, 0, 0, 0, 0, 0, 0],
+    fl_daily_main: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    us_daily_main: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    us_daily: [0, 0, 0, 0, 0, 0, 0],
     fl_options: {},
     county: "",
     change: false,
@@ -413,7 +406,7 @@ class Dashboard extends Component {
 
 
 
-    this.state.main_title="Florida Confirmed Covid Cases vs Estimates";
+    this.state.main_title = "Florida Confirmed Covid Cases vs Estimates";
     this.state.fl_options = cardChartOpts1;
     this.state.county = "Orange";
     nav.navigation.items[5].children = nav.testing.Orange;
@@ -424,46 +417,46 @@ class Dashboard extends Component {
   /**
    *Collects data from api's when components mount
    */
-    async componentDidMount(){
+  async componentDidMount() {
 
-      /**
-       * Papaparse
-       * converts csv files with US projections to json
-       */
-      Papa.parse(us_csv, {
-        header: true,
-        dynamicTyping: false,
-        delimiter: ",",
-        download: true,
-      	complete:  this.updateData_us,
-      	}
-      );
+    /**
+     * Papaparse
+     * converts csv files with US projections to json
+     */
+    Papa.parse(us_csv, {
+      header: true,
+      dynamicTyping: false,
+      delimiter: ",",
+      download: true,
+      complete: this.updateData_us,
+    }
+    );
 
 
-      /**
-       * Papaparse
-       * converts csv files with FL projections to json
-       */
+    /**
+     * Papaparse
+     * converts csv files with FL projections to json
+     */
 
-      Papa.parse(fl_csv, {
-        header: true,
-        dynamicTyping: false,
-        delimiter: ",",
-        download: true,
-        complete:  this.updateData_fl,
-        }
-      );
+    Papa.parse(fl_csv, {
+      header: true,
+      dynamicTyping: false,
+      delimiter: ",",
+      download: true,
+      complete: this.updateData_fl,
+    }
+    );
 
     const country_confirmed = await get_country();
     const orange_confirmed = await orange(this.state.county);
     const state_confirmed = await florida_total();
     const us_daily_main_vals = await Usa_daily(us_url);
-    const us_daily_vals = us_daily_main_vals.slice(21,28);
+    const us_daily_vals = us_daily_main_vals.slice(21, 28);
     const daily_vals_main = await Daily(29);
-    const daily_vals = daily_vals_main.slice(0,7);
-    const oc_daily_vals = await counties_daily(daily_vals,this.state.county);
-    const state_daily_vals = await state_daily(daily_vals,6);
-    const state_daily_main = await state_daily(daily_vals_main,27);
+    const daily_vals = daily_vals_main.slice(0, 7);
+    const oc_daily_vals = await counties_daily(daily_vals, this.state.county);
+    const state_daily_vals = await state_daily(daily_vals, 6);
+    const state_daily_main = await state_daily(daily_vals_main, 27);
 
     mainChart.datasets[0].data = [...state_daily_main];
     cardChartData1.datasets[0].data = [...state_daily_vals];
@@ -472,12 +465,14 @@ class Dashboard extends Component {
 
 
 
-    this.setState({country: this.formatNumber(country_confirmed), orange: this.formatNumber(orange_confirmed), total: this.formatNumber(state_confirmed)
-    ,fl_daily: state_daily_vals, counties_daily: oc_daily_vals, us_daily: us_daily_vals, fl_daily_main: state_daily_main,
-    county: nav.county.county, fl_week: daily_vals, us_daily_main: us_daily_main_vals});
+    this.setState({
+      country: this.formatNumber(country_confirmed), orange: this.formatNumber(orange_confirmed), total: this.formatNumber(state_confirmed)
+      , fl_daily: state_daily_vals, counties_daily: oc_daily_vals, us_daily: us_daily_vals, fl_daily_main: state_daily_main,
+      county: nav.county.county, fl_week: daily_vals, us_daily_main: us_daily_main_vals
+    });
     let store = this.state.florida_estimates;
     mainChart.datasets[1].data = store;
-    this.setState({florida_estimates: store});
+    this.setState({ florida_estimates: store });
     this.state.mounted = true;
 
 
@@ -490,36 +485,35 @@ class Dashboard extends Component {
    */
 
 
-  async componentDidUpdate(){
+  async componentDidUpdate() {
 
-    if(change==true && this.state.mounted == true){
-      change=false;
+    if (change == true && this.state.mounted == true) {
+      change = false;
       const orange_confirmed = await orange(this.state.county);
-      const daily_vals = await counties_daily(this.state.fl_week,this.state.county);
-      cardChartData2.datasets[0].data =[...daily_vals];
-      this.setState({orange: this.formatNumber(orange_confirmed), counties_daily: daily_vals});
+      const daily_vals = await counties_daily(this.state.fl_week, this.state.county);
+      cardChartData2.datasets[0].data = [...daily_vals];
+      this.setState({ orange: this.formatNumber(orange_confirmed), counties_daily: daily_vals });
     }
 
-    if(pressed==true && this.state.radioSelected ==1)
-    {
+    if (pressed == true && this.state.radioSelected == 1) {
 
-      pressed =false;
+      pressed = false;
       let store = [...this.state.us_estimates];
       let store2 = [...this.state.us_daily_main];
       mainChart.datasets[1].data = [...store];
       mainChart.datasets[0].data = [...store2];
-      this.setState({us_esitmates: store, us_daily_main: store2, main_title: "USA Confirmed Covid Cases vs Estimates"});
+      this.setState({ us_esitmates: store, us_daily_main: store2, main_title: "USA Confirmed Covid Cases vs Estimates" });
 
     }
 
-    else if (pressed==true && this.state.radioSelected ==2) {
+    else if (pressed == true && this.state.radioSelected == 2) {
       let store = [...this.state.florida_estimates];
       let store2 = [...this.state.fl_daily_main];
-      pressed =false;
+      pressed = false;
       mainChart.datasets[1].data = [...this.state.florida_estimates];
       mainChart.datasets[0].data = [...this.state.fl_daily_main];
 
-      this.setState({florida_estimates: store, fl_daily_main: store2, main_title: "Florida Confirmed Covid Cases vs Estimates"});
+      this.setState({ florida_estimates: store, fl_daily_main: store2, main_title: "Florida Confirmed Covid Cases vs Estimates" });
     }
 
   }
@@ -530,23 +524,20 @@ class Dashboard extends Component {
    * Sets main chart to Us
    */
 
-async updateData_us(result) {
+  async updateData_us(result) {
     const data = await result.data;
-    let vals= {};
+    let vals = {};
     let final = [];
-    for(let i =0; i<data.length;i++)
-      {
-        if(data[i].date == curdayr(1))
-        {
-          vals = data.slice(i-28,i);
-        }
+    for (let i = 0; i < data.length; i++) {
+      if (data[i].date == curdayr(1)) {
+        vals = data.slice(i - 28, i);
       }
+    }
 
-      for(let k = 0; k<vals.length;k++)
-      {
-        final[k] = vals[k].predicted_current_infected_mean;
-      }
-    this.setState({us_estimates: final});
+    for (let k = 0; k < vals.length; k++) {
+      final[k] = vals[k].predicted_current_infected_mean;
+    }
+    this.setState({ us_estimates: final });
 
   }
 
@@ -556,33 +547,30 @@ async updateData_us(result) {
    */
 
   async updateData_fl(result) {
-      const data = await result.data;
-      let final = [];
-      let vals= {};
-      for(let i =0; i<data.length;i++)
-        {
-          if(data[i].date == curdayr(1))
-          {
-            vals = data.slice(i-28,i);
-          }
-        }
-        for(let k = 0; k<vals.length;k++)
-        {
-          final[k] = vals[k].predicted_current_infected_mean;
-        }
-      this.setState({florida_estimates: final});
-
+    const data = await result.data;
+    let final = [];
+    let vals = {};
+    for (let i = 0; i < data.length; i++) {
+      if (data[i].date == curdayr(1)) {
+        vals = data.slice(i - 28, i);
+      }
     }
+    for (let k = 0; k < vals.length; k++) {
+      final[k] = vals[k].predicted_current_infected_mean;
+    }
+    this.setState({ florida_estimates: final });
+
+  }
 
 
 
-    /**
-     *Formats the numbers
-     */
+  /**
+   *Formats the numbers
+   */
 
-  formatNumber(num){
-   return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
- }
+  formatNumber(num) {
+    return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
+  }
 
 
   toggle() {
@@ -595,17 +583,16 @@ async updateData_us(result) {
    * Map toggle
    */
   onRadioBtnClick(radioSelected) {
-    if(radioSelected !=this.state.radioSelected)
-    {
-    this.setState({
-      radioSelected: radioSelected,
-    });
+    if (radioSelected != this.state.radioSelected) {
+      this.setState({
+        radioSelected: radioSelected,
+      });
 
-    pressed=true;
+      pressed = true;
 
 
+    }
   }
-}
 
   loading = () => <div className="animated fadeIn pt-1 text-center">Loading...</div>
 
@@ -640,68 +627,67 @@ async updateData_us(result) {
                 </div>
               </CardBody>
               <CardFooter>
-                <Row className="text-center">
-                  <Col sm={12} md className="mb-sm-2 mb-0">
-                    <div className="text-muted">Projections Mean</div>
+                <Row>
+                  <Col xs="12" sm="10" lg="4">
+                    <a className="text-muted" href="https://github.com/youyanggu/covid19_projections">Projections Mean</a>
                     <Progress className="progress-xs mt-2" color="success" value="20" />
                   </Col>
-                  <Col sm={12} md className="mb-sm-2 mb-0 d-md-down-none">
-                    <div className="text-muted">Confirmed</div>
+                  <Col xs="12" sm="10" lg="4">
+                    <a className="text-muted" href="https://github.com/CSSEGISandData/COVID-19">Confirmed</a>
                     <Progress className="progress-xs mt-2" color="info" value="20" />
                   </Col>
-
                 </Row>
               </CardFooter>
             </Card>
           </Col>
         </Row>
 
-<Container >
-<Row >
-                  <Col xs="12" sm="10" lg="8" onClick={ ()=>{change = true; this.setState({county: nav.county.county}); }}>
-                  <Florida />
-                  </Col>
+        <Container >
+          <Row >
+            <Col xs="12" sm="10" lg="8" onClick={() => { change = true; this.setState({ county: nav.county.county }); }}>
+              <Florida />
+            </Col>
 
-<Col xs="12" sm="10" lg="4">
+            <Col xs="12" sm="10" lg="4">
 
-            <Card className="text-white bg-info">
-              <CardBody className="pb-0">
-                <div className="text-value">{this.state.orange}</div>
-                <div>Current Cases in {this.state.county} County</div>
-              </CardBody>
-              <div className="chart-wrapper mx-3" style={{ height: '70px' }}>
-                <Line data={cardChartData2} options={cardChartOpts2} height={70} />
-              </div>
-            </Card>
-
-
-
-            <Card className="text-white bg-primary">
-              <CardBody className="pb-0">
-                <div className="text-value">{this.state.total}</div>
-                <div>Current Cases in Florida</div>
-              </CardBody>
-              <div className="chart-wrapper mx-3" style={{ height: '70px' }}>
-                <Line data={cardChartData1} options={this.state.fl_options} height={70} />
-              </div>
-            </Card>
+              <Card className="text-white bg-info">
+                <CardBody className="pb-0">
+                  <div>Current Cases in {this.state.county} County:</div>
+                  <div className="text-value">{this.state.orange}</div>
+                </CardBody>
+                <div className="chart-wrapper mx-3" style={{ height: '70px' }}>
+                  <Line data={cardChartData2} options={cardChartOpts2} height={70} />
+                </div>
+              </Card>
 
 
 
+              <Card className="text-white bg-primary">
+                <CardBody className="pb-0">
+                  <div>Current Cases in Florida:</div>
+                  <div className="text-value">{this.state.total}</div>
+                </CardBody>
+                <div className="chart-wrapper mx-3" style={{ height: '70px' }}>
+                  <Line data={cardChartData1} options={this.state.fl_options} height={70} />
+                </div>
+              </Card>
 
-            <Card className="text-white bg-danger">
-              <CardBody className="pb-0">
-                <div className="text-value">{this.state.country}</div>
-                <div>Total Cases in the U.S</div>
-              </CardBody>
-              <div className="chart-wrapper mx-3" style={{ height: '70px' }}>
-                <Line data={cardChartData4} options={cardChartOpts4} height={70} />
-              </div>
-            </Card>
 
-          </Col>
-</Row>
-</Container>
+
+
+              <Card className="text-white bg-danger">
+                <CardBody className="pb-0">
+                  <div>Total Cases in the U.S:</div>
+                  <div className="text-value">{this.state.country}</div>
+                </CardBody>
+                <div className="chart-wrapper mx-3" style={{ height: '70px' }}>
+                  <Line data={cardChartData4} options={cardChartOpts4} height={70} />
+                </div>
+              </Card>
+
+            </Col>
+          </Row>
+        </Container>
 
 
 
