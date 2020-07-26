@@ -8,6 +8,7 @@ import {
   CardBody,
   CardFooter,
   CardTitle,
+  Container,
   Col,
   Progress,
   Row,
@@ -94,7 +95,7 @@ const cardChartOpts1 = {
   scales: {
     xAxes: [
       {
-        display: false,
+        display: true,
       }],
     yAxes: [
       {
@@ -137,7 +138,7 @@ const cardChartOpts2 = {
   scales: {
     xAxes: [
       {
-        display: false,
+        display: true,
       }],
     yAxes: [
       {
@@ -183,7 +184,7 @@ const cardChartOpts4 = {
   scales: {
     xAxes: [
       {
-        display: false,
+        display: true,
       }],
     yAxes: [
       {
@@ -490,7 +491,7 @@ class Dashboard extends Component {
 
 
   async componentDidUpdate(){
-    
+
     if(change==true && this.state.mounted == true){
       change=false;
       const orange_confirmed = await orange(this.state.county);
@@ -618,7 +619,7 @@ async updateData_us(result) {
       <div className="animated fadeIn">
 
         <Row>
-          <Col>
+          <Col >
             <Card>
               <CardBody>
                 <Row>
@@ -655,13 +656,14 @@ async updateData_us(result) {
           </Col>
         </Row>
 
+<Container >
+<Row >
+                  <Col xs="12" sm="10" lg="8" onClick={ ()=>{change = true; this.setState({county: nav.county.county}); }}>
+                  <Florida />
+                  </Col>
 
-        <div onClick={ ()=>{change = true; this.setState({county: nav.county.county}); }}>
-        <Florida />
-        </div>
+<Col xs="12" sm="10" lg="4">
 
-
-          <Col xs="12" sm="6" lg="3">
             <Card className="text-white bg-info">
               <CardBody className="pb-0">
                 <div className="text-value">{this.state.orange}</div>
@@ -671,9 +673,9 @@ async updateData_us(result) {
                 <Line data={cardChartData2} options={cardChartOpts2} height={70} />
               </div>
             </Card>
-          </Col>
 
-          <Col xs="12" sm="6" lg="3">
+
+
             <Card className="text-white bg-primary">
               <CardBody className="pb-0">
                 <div className="text-value">{this.state.total}</div>
@@ -683,10 +685,10 @@ async updateData_us(result) {
                 <Line data={cardChartData1} options={this.state.fl_options} height={70} />
               </div>
             </Card>
-          </Col>
 
 
-          <Col xs="12" sm="6" lg="3">
+
+
             <Card className="text-white bg-danger">
               <CardBody className="pb-0">
                 <div className="text-value">{this.state.country}</div>
@@ -696,7 +698,12 @@ async updateData_us(result) {
                 <Line data={cardChartData4} options={cardChartOpts4} height={70} />
               </div>
             </Card>
+
           </Col>
+</Row>
+</Container>
+
+
 
 
 

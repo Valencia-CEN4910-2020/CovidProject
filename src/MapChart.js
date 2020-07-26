@@ -130,12 +130,10 @@ function handleMoveEnd(position) {
    width={800}
    height={600}
    style={{
-   width: "70%",
-   float: "right",
+   width: "100%",
 
 }}
 >
-
 <ZoomableGroup    zoom={position.zoom}
           center={[ -83,27.5]}
           onMoveEnd={handleMoveEnd} >
@@ -189,8 +187,8 @@ function handleMoveEnd(position) {
           </ZoomableGroup>
       </ComposableMap>
 
-      <div className="controls" style={{float: "right",}}>
-        <button onClick={handleZoomIn}>
+      <div  className="controls" >
+        <button  onClick={handleZoomIn}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="24"

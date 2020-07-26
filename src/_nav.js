@@ -17,7 +17,8 @@ export let county = {county:"Orange"};
     },
     {
       name: 'State of Emergency',
-      url: '/',
+      url: 'https://www.flgov.com/wp-content/uploads/orders/2020/EO_20-166.pdf',
+      attributes: { target: '_blank', rel: "noopener" },
     },
     {
       name: 'Current Restrictions',
