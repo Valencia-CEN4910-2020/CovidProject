@@ -129,13 +129,14 @@ const MapChart = ({ setTooltipContent }) => {
    * Renders florida map
    */
   return (
-    <>
+    <div>
       <ComposableMap data-tip=""
         projectionConfig={{ scale: 4500 }}
-        width={800}
-        height={600}
+        // width={800}
+        //height={600}
         style={{
           width: "100%",
+          outline: "black solid 1px"
 
         }}
       >
@@ -217,7 +218,7 @@ const MapChart = ({ setTooltipContent }) => {
           </svg>
         </button>
       </div>
-    </>
+    </div>
   );
 };
 

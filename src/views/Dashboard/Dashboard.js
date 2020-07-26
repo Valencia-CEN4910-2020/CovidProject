@@ -655,8 +655,8 @@ class Dashboard extends Component {
                   <div>Current Cases in {this.state.county} County:</div>
                   <div className="text-value">{this.state.orange}</div>
                 </CardBody>
-                <div className="chart-wrapper mx-3" style={{ height: '70px' }}>
-                  <Line data={cardChartData2} options={cardChartOpts2} height={70} />
+                <div className="chart-wrapper mx-3" style={{ height: '100px' }}>
+                  <Line data={cardChartData2} options={cardChartOpts2} height={100} />
                 </div>
               </Card>
 
@@ -667,8 +667,8 @@ class Dashboard extends Component {
                   <div>Current Cases in Florida:</div>
                   <div className="text-value">{this.state.total}</div>
                 </CardBody>
-                <div className="chart-wrapper mx-3" style={{ height: '70px' }}>
-                  <Line data={cardChartData1} options={this.state.fl_options} height={70} />
+                <div className="chart-wrapper mx-3" style={{ height: '100px' }}>
+                  <Line data={cardChartData1} options={this.state.fl_options} height={100} />
                 </div>
               </Card>
 
@@ -680,8 +680,8 @@ class Dashboard extends Component {
                   <div>Total Cases in the U.S:</div>
                   <div className="text-value">{this.state.country}</div>
                 </CardBody>
-                <div className="chart-wrapper mx-3" style={{ height: '70px' }}>
-                  <Line data={cardChartData4} options={cardChartOpts4} height={70} />
+                <div className="chart-wrapper mx-3" style={{ height: '100px' }}>
+                  <Line data={cardChartData4} options={cardChartOpts4} height={100} />
                 </div>
               </Card>
 
