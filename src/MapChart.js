@@ -191,8 +191,18 @@ const MapChart = ({ setTooltipContent }) => {
         </ZoomableGroup>
       </ComposableMap>
 
-      <div className="controls" >
-        <button onClick={handleZoomIn}>
+      <div className="controls" style={{position:"static",transform: "translatey(-545px)", float: "right",paddingRight: "10px",  top: 0,
+  left: "50%"}}>
+        <button onClick={handleZoomIn} style={{display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    padding: 0,
+    height: "2rem",
+    width: "2rem",
+    background: "#ff5533",
+    color: "#fff",
+    borderRadius: "100%",
+    border: 0}}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="24"
@@ -205,8 +215,18 @@ const MapChart = ({ setTooltipContent }) => {
             <line x1="5" y1="12" x2="19" y2="12" />
           </svg>
         </button>
-        <button onClick={handleZoomOut}>
-          <svg
+        <button onClick={handleZoomOut} style={{display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    padding: 0,
+    height: "2rem",
+    width: "2rem",
+    background: "#ff5533",
+    color: "#fff",
+    borderRadius: "100%",
+    border: 0}}>
+          <svg   style={{display: "inline-block",
+  verticalAlign: "middle"}}
             xmlns="http://www.w3.org/2000/svg"
             width="24"
             height="24"
