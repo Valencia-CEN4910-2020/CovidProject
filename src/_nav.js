@@ -2,30 +2,20 @@ export let county = { county: "Orange" };
 
 export const navigation = {
     items: [
-        // {
-        //     title: true,
-        //     name: county.county + " County",
-        //     url: '/dashboard',
-        // },
         {
             title: true,
-            name: county.county + ' County Current Status',
-            wrapper: {            // optional wrapper object
-                element: '',        // required valid HTML5 element tag
-                attributes: {}        // optional valid JS object with JS API naming ex: { className: "my-class", style: { fontFamily: "Verdana" }, id: "my-id"}
-            },
-            class: ''             // optional class names space delimited list for title item ex: "text-center"
+            name: 'Florida Resources'
+        },
+        {
+            name: 'Recovery Plan',
+            url: 'https://www.flgov.com/wp-content/uploads/covid19/Taskforce%20Report.pdf',
+            attributes: { target: '_blank', rel: "noopener" },
         },
         {
             name: 'State of Emergency',
             url: 'https://www.flgov.com/wp-content/uploads/orders/2020/EO_20-166.pdf',
             attributes: { target: '_blank', rel: "noopener" },
         },
-        // {
-        //   name: 'Current Restrictions',
-        //   url: '/',
-
-        // },
         {
             title: true,
             name: county.county + ' County Resources',
@@ -37,26 +27,6 @@ export const navigation = {
         {
             name: 'Testing Locations',
             attributes: { className: "testing" },
-            children: [
-                {
-                    name: 'Location 1',
-                },
-                {
-                    name: 'Location 2',
-                },
-                {
-                    name: 'Location 3',
-                },
-            ],
-
-        },
-        {
-            name: 'Plan for Florida’s Recovery.',
-            url: 'https://www.flgov.com/wp-content/uploads/covid19/Taskforce%20Report.pdf',
-            attributes: { target: '_blank', rel: "noopener" },
-        },
-        {
-            divider: true,
         },
     ],
 };

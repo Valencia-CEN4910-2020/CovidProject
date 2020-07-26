@@ -17,12 +17,17 @@ const geoUrl =
 
 /**
  * This funtion gets called when a county is clicked, the selected county becomes default
+    items[0] = Florida Resources
+    items[1] = Recovery Plan
+    items[2] = State of Emergency
+    items[3] = County Resources
+    items[4] = Testing Locations
  */
+
 const change_county = (county) => {
   nav.county.county = county;
-  nav.navigation.items[0].name = nav.county.county + " County"
-  nav.navigation.items[1].name = county + " County Current Status";
-  nav.navigation.items[4].name = county + " County Testing Locations";
+  nav.navigation.items[3].name = nav.county.county + " County Resources"
+  nav.navigation.items[4].name = "Testing Locations";
   testloc(county);
 }
 
