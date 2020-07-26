@@ -23,7 +23,7 @@ class DefaultHeader extends Component {
       <div >
         <AppSidebarToggler className="d-lg-none" display="md" mobile />
         <AppSidebarToggler className="d-md-down-none" display="lg" />
-        <h1 style ={{float:"right"}} >Covid Tracker</h1>
+        <h1 style ={{float:"right"}} >COVID Tracker</h1>
 
         {/*<AppAsideToggler className="d-lg-none" mobile />*/}
       </div>

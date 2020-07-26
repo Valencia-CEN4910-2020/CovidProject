@@ -28,6 +28,18 @@ export const navigation = {
             name: 'Testing Locations',
             attributes: { className: "testing" },
         },
+        {
+            title: true,
+            name: 'Data Sources',
+        },
+        {
+            name: 'Johns Hopkins',
+            url: 'https://github.com/CSSEGISandData/COVID-19',
+        },
+        {
+            name: 'Projections',
+            url: 'https://github.com/youyanggu/covid19_projections',
+        }
     ],
 };
 
