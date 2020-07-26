@@ -1,4 +1,4 @@
-import React, { memo,useState } from "react";
+import React, { memo, useState } from "react";
 import {
   ZoomableGroup,
   ComposableMap,
@@ -15,14 +15,14 @@ import * as nav from './_nav';
 const geoUrl =
   "https://raw.githubusercontent.com/Valencia-CEN4910-2020/CovidProject/master/src/florida2.json";
 
-  /**
-   * This funtion gets called when a county is clicked, the selected county becomes default
-   */
-const change_county = (county) =>{
+/**
+ * This funtion gets called when a county is clicked, the selected county becomes default
+ */
+const change_county = (county) => {
   nav.county.county = county;
-  nav.navigation.items[0].name = nav.county.county +" County"
+  nav.navigation.items[0].name = nav.county.county + " County"
   nav.navigation.items[1].name = county + " County Current Status";
-  nav.navigation.items[4].name = county + " County Current Resources";
+  nav.navigation.items[4].name = county + " County Testing Locations";
   testloc(county);
 }
 
@@ -30,68 +30,68 @@ const change_county = (county) =>{
 /**
  * Sets testing location based on selected county
  */
-const testloc= (county) =>{
-  switch(county) {
-  case "Brevard":
-  nav.navigation.items[5].children = nav.testing.Brevard;
-    break;
-  case "Broward":
-  nav.navigation.items[5].children = nav.testing.Broward;
-    break;
-  case "Charlotte":
-  nav.navigation.items[5].children = nav.testing.Charlotte;
-    break;
-  case "Duval":
-  nav.navigation.items[5].children = nav.testing.Duval;
-    break;
-  case "Escambia":
-  nav.navigation.items[5].children = nav.testing.Escambia;
-  break;
-  case "Hillsborough":
-  nav.navigation.items[5].children = nav.testing.Hillsborough;
-    break;
-  case "Lake":
-  nav.navigation.items[5].children = nav.testing.Lake;
+const testloc = (county) => {
+  switch (county) {
+    case "Brevard":
+      nav.navigation.items[4].children = nav.testing.Brevard;
       break;
-  case "Lee":
-nav.navigation.items[5].children = nav.testing.Lee;
+    case "Broward":
+      nav.navigation.items[4].children = nav.testing.Broward;
       break;
-  case "Leon":
-nav.navigation.items[5].children = nav.testing.Leon;
-    break;
-  case "Manatee":
-nav.navigation.items[5].children = nav.testing.Manatee;
-    break;
-  case "Miami-Dade":
-      nav.navigation.items[5].children = nav.testing.Miami;
-    break;
-  case "Okaloosa":
-nav.navigation.items[5].children = nav.testing.Okaloosa;
-    break;
-  case "Orange":
-nav.navigation.items[5].children = nav.testing.Orange;
-    break;
+    case "Charlotte":
+      nav.navigation.items[4].children = nav.testing.Charlotte;
+      break;
+    case "Duval":
+      nav.navigation.items[4].children = nav.testing.Duval;
+      break;
+    case "Escambia":
+      nav.navigation.items[4].children = nav.testing.Escambia;
+      break;
+    case "Hillsborough":
+      nav.navigation.items[4].children = nav.testing.Hillsborough;
+      break;
+    case "Lake":
+      nav.navigation.items[4].children = nav.testing.Lake;
+      break;
+    case "Lee":
+      nav.navigation.items[4].children = nav.testing.Lee;
+      break;
+    case "Leon":
+      nav.navigation.items[4].children = nav.testing.Leon;
+      break;
+    case "Manatee":
+      nav.navigation.items[4].children = nav.testing.Manatee;
+      break;
+    case "Miami-Dade":
+      nav.navigation.items[4].children = nav.testing.Miami;
+      break;
+    case "Okaloosa":
+      nav.navigation.items[4].children = nav.testing.Okaloosa;
+      break;
+    case "Orange":
+      nav.navigation.items[4].children = nav.testing.Orange;
+      break;
     case "Palm Beach":
-nav.navigation.items[5].children = nav.testing.Palm;
+      nav.navigation.items[4].children = nav.testing.Palm;
       break;
     case "Pasco":
-nav.navigation.items[5].children = nav.testing.Pasco;
-    break;
+      nav.navigation.items[4].children = nav.testing.Pasco;
+      break;
     case "Polk":
-nav.navigation.items[5].children = nav.testing.Polk;
-    break;
+      nav.navigation.items[4].children = nav.testing.Polk;
+      break;
     case "Sarasota":
-nav.navigation.items[5].children = nav.testing.Sarasota;
-        break;
+      nav.navigation.items[4].children = nav.testing.Sarasota;
+      break;
     case "St. Lucie":
-nav.navigation.items[5].children = nav.testing.Lucie;
+      nav.navigation.items[4].children = nav.testing.Lucie;
       break;
     case "Volusia":
-nav.navigation.items[5].children = nav.testing.Volusia;
-        break;
-  default:
-  nav.navigation.items[5].children = nav.testing.None;
-}
+      nav.navigation.items[4].children = nav.testing.Volusia;
+      break;
+    default:
+      nav.navigation.items[4].children = nav.testing.None;
+  }
 }
 
 
@@ -102,40 +102,40 @@ const MapChart = ({ setTooltipContent }) => {
   const [position, setPosition] = useState({ coordinates: [0, 0], zoom: 1 });
 
 
-   /**
-    * Handles the map zoom in feature
-    */
+  /**
+   * Handles the map zoom in feature
+   */
   function handleZoomIn() {
-  if (position.zoom >= 4) return;
-  setPosition(pos => ({ ...pos, zoom: pos.zoom * 2 }));
-}
-/**
- * Handles the map zoom out feature
- */
-function handleZoomOut() {
-  if (position.zoom <= 1) return;
-  setPosition(pos => ({ ...pos, zoom: pos.zoom / 2 }));
-}
+    if (position.zoom >= 4) return;
+    setPosition(pos => ({ ...pos, zoom: pos.zoom * 2 }));
+  }
+  /**
+   * Handles the map zoom out feature
+   */
+  function handleZoomOut() {
+    if (position.zoom <= 1) return;
+    setPosition(pos => ({ ...pos, zoom: pos.zoom / 2 }));
+  }
 
-function handleMoveEnd(position) {
-  setPosition(position);
-}
-/**
- * Renders florida map
- */
+  function handleMoveEnd(position) {
+    setPosition(position);
+  }
+  /**
+   * Renders florida map
+   */
   return (
     <>
       <ComposableMap data-tip=""
-      projectionConfig={{ scale: 4500 }}
-   width={800}
-   height={600}
-   style={{
-   width: "100%",
+        projectionConfig={{ scale: 4500 }}
+        width={800}
+        height={600}
+        style={{
+          width: "100%",
 
-}}
->
-<ZoomableGroup    zoom={position.zoom}
-          center={[ -83,27.5]}
+        }}
+      >
+        <ZoomableGroup zoom={position.zoom}
+          center={[-83, 27.5]}
           onMoveEnd={handleMoveEnd} >
           <Geographies geography={geoUrl} >
             {({ geographies }) =>
@@ -143,19 +143,17 @@ function handleMoveEnd(position) {
                 <Geography
                   key={geo.rsmKey}
                   geography={geo}
-                  onClick ={()=>{change_county(geo.properties.NAME);}}
-                  onMouseEnter={ async () => {
-                    let confirmed=0;
-                    let deaths=0;
+                  onClick={() => { change_county(geo.properties.NAME); }}
+                  onMouseEnter={async () => {
+                    let confirmed = 0;
+                    let deaths = 0;
                     let counties = await Counties();
 
                     const name = geo.properties.NAME;
-                    for(let i=0;i<counties.length;i++)
-                    {
-                      if(name == counties[i].admin2)
-                      {
+                    for (let i = 0; i < counties.length; i++) {
+                      if (name == counties[i].admin2) {
                         confirmed = counties[i].confirmed;
-                        deaths =  counties[i].deaths;
+                        deaths = counties[i].deaths;
                       }
                     }
                     setTooltipContent(`${name} County <br/> Confirmed cases: ${confirmed} <br/>
@@ -184,11 +182,11 @@ function handleMoveEnd(position) {
               ))
             }
           </Geographies>
-          </ZoomableGroup>
+        </ZoomableGroup>
       </ComposableMap>
 
-      <div  className="controls" >
-        <button  onClick={handleZoomIn}>
+      <div className="controls" >
+        <button onClick={handleZoomIn}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="24"

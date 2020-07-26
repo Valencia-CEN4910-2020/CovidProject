@@ -409,7 +409,7 @@ class Dashboard extends Component {
     this.state.main_title = "Florida Confirmed Covid Cases vs Estimates";
     this.state.fl_options = cardChartOpts1;
     this.state.county = "Orange";
-    nav.navigation.items[5].children = nav.testing.Orange;
+    nav.navigation.items[4].children = nav.testing.Orange;
   }
 
 
